@@ -7,7 +7,7 @@ from burkut.resources.base import BaseResource
 
 
 class ForexResource(BaseResource):
-    """Canlı döviz kurları (USDTRY, EURTRY, GBPTRY vb.)."""
+    """Döviz kurları (USDTRY, EURTRY, GBPTRY vb.)."""
 
     def list(self) -> List[Dict[str, Any]]:
         """

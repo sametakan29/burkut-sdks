@@ -6,9 +6,9 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933.svg?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-**Borsa İstanbul (BIST), TEFAS Yatırım Fonları, Döviz, Altın ve VİOP Piyasaları için Resmi Node.js ve TypeScript İstemcisi.**
+**Borsa İstanbul (15 Dk Gecikmeli), TEFAS Yatırım Fonları, Döviz ve Altın Piyasaları için Açık Kaynak Node.js ve TypeScript İstemcisi.**
 
-Bürküt Finansal Veri API'sinin resmi Node.js kütüphanesidir. **Sıfır dış bağımlılık (Zero-Dependency)** prensibiyle tasarlanmış olup, Node.js 18+ yerel `fetch` motoru üzerinde çalışır. `node_modules` klasörünü şişirmez, anında yüklenir ve tam tip güvenliği (`.d.ts`) sunar.
+Bürküt Finansal Veri API'sinin açık kaynak Node.js kütüphanesidir. **Sıfır dış bağımlılık (Zero-Dependency)** prensibiyle tasarlanmış olup, Node.js 18+ yerel `fetch` motoru üzerinde çalışır. `node_modules` klasörünü şişirmez, anında yüklenir ve tam tip güvenliği (`.d.ts`) sunar.
 
 ---
 
@@ -47,7 +47,7 @@ import { BurkutClient } from 'burkut';
 const client = new BurkutClient({ apiKey: 'bk_live_...' });
 
 async function main() {
-  // 1. BIST Hisse Senedi Verisi
+  // 1. BIST Hisse Senedi Verisi (15 Dk Gecikmeli)
   const thyao = await client.stocks.get('THYAO');
   console.log(`${thyao.name}: ${thyao.price} TL (Değişim: %${thyao.changePercent})`);
 
@@ -57,7 +57,7 @@ async function main() {
     console.log(`${hisse.symbol} -> ${hisse.price} TL`);
   }
 
-  // 2. Canlı Döviz Kurları (USD, EUR vb.)
+  // 2. Döviz Kurları (USD, EUR vb.)
   const usd = await client.forex.get('USD');
   console.log(`Dolar/TL Alış: ${usd.buyRate} - Satış: ${usd.sellRate}`);
 
@@ -161,7 +161,11 @@ try {
 
 ## ⚖️ Yasal Uyarı & Feragatname (Disclaimer)
 
-> **Önemli:** Bu kütüphane tamamen eğitim ve kişisel araştırma amaçlı geliştirilmiştir. Resmi Borsa İstanbul verisi sağlamaz, yatırım tavsiyesi içermez. Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu garanti edilmez.
+> **Önemli Yasal Bilgilendirme:** Bu kütüphane ve sağlanan API, tamamen **eğitim, kişisel araştırma ve hobi amaçlı** geliştirilmiştir.
+> - **Resmi Veri Sağlayıcısı Değildir:** Bürküt bir borsa aracı kurumu, yatırım kuruluşu veya lisanslı borsa veri dağıtıcısı değildir.
+> - **15 Dakika Gecikmeli Veri:** Borsa İstanbul (BIST) pay piyasası verileri yasal düzenlemeler gereği en az 15 dakika gecikmelidir.
+> - **Yatırım Tavsiyesi Değildir:** Burada veya kütüphane aracılığıyla sunulan veriler hiçbir şekilde yatırım danışmanlığı, al-sat tavsiyesi veya finansal yönlendirme içermez.
+> - **Garanti Taahhüt Edilmez:** Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu, eksiksizliği veya kesintisizliği taahhüt edilmez.
 
 ---
 

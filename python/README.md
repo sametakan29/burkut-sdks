@@ -5,17 +5,17 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-**Borsa İstanbul (BIST), TEFAS Yatırım Fonları, Canlı Döviz, Altın ve VİOP Piyasaları için Resmi ve Sıfır Bağımlılıklı Python İstemcisi.**
+**Borsa İstanbul (15 Dk Gecikmeli), TEFAS Yatırım Fonları, Döviz ve Altın Piyasaları için Açık Kaynak ve Sıfır Bağımlılıklı Python İstemcisi.**
 
-Bürküt Finansal Veri API'sinin resmi Python kütüphanesidir. `requests` veya `urllib3` gibi hiçbir harici paket kurmanıza gerek kalmadan, Python'un yerel standart kütüphanesi üzerinde **ultra hafif, stabil ve yüksek hızlı** çalışır.
+Bürküt Finansal Veri API'sinin açık kaynak Python kütüphanesidir. `requests` veya `urllib3` gibi hiçbir harici paket kurmanıza gerek kalmadan, Python'un yerel standart kütüphanesi üzerinde **ultra hafif, stabil ve yüksek hızlı** çalışır.
 
 ---
 
 ## 🚀 Neden `burkut`?
 
 * ⚡ **Sıfır Dış Bağımlılık (Zero-Dependency):** Sadece Python standart kütüphanesini kullanır. Projenizin bağımlılık ağacını şişirmez.
-* 📈 **Hepsi Bir Arada:** BIST hisseleri, TEFAS fonları, canlı altın & döviz, tahvil ve VİOP verileri tek çatı altında.
-* 🐼 **Pandas & Data Science Uyumlu:** Tek satırda DataFrame'e dönüştürün, algoritmik modellerinizi besleyin.
+* 📈 **Hepsi Bir Arada:** 15 dk gecikmeli BIST hisseleri, TEFAS fonları, serbest piyasa altın & döviz, tahvil ve VİOP verileri tek çatı altında.
+* 🐼 **Pandas & Data Science Uyumlu:** Tek satırda DataFrame'e dönüştürün, araştırma modellerinizi besleyin.
 * 🛡️ **Web Scraping Değil, Güvenilir REST API:** Kaynak sitelerin HTML yapısı değişince bozulan kırılgan scraper'lara veda edin.
 * 🧠 **Tam Tip Desteği (Type Hints):** PyCharm ve VS Code üzerinde kusursuz otomatik tamamlama (IntelliSense).
 
@@ -39,7 +39,7 @@ from burkut import BurkutClient
 client = BurkutClient(api_key="bk_live_...")
 ```
 
-### 2. Borsa İstanbul (BIST) Hisse Senetleri
+#### 2. Borsa İstanbul (BIST) Hisse Senetleri (15 Dk Gecikmeli)
 ```python
 # Tek bir hisse sorgulama
 thyao = client.stocks.get("THYAO")
@@ -65,7 +65,7 @@ tum_fonlar = client.funds.list()
 print(f"Toplam listelenen fon adedi: {len(tum_fonlar)}")
 ```
 
-### 4. Canlı Serbest Piyasa & TCMB Döviz Kurları
+### 4. Serbest Piyasa & TCMB Döviz Kurları
 ```python
 # Dolar ve Euro
 usd = client.forex.get("USD")
@@ -78,7 +78,7 @@ print(f"Euro/TL:  {eur['buyRate']} (Alış) - {eur['sellRate']} (Satış)")
 all_currencies = client.forex.list()
 ```
 
-### 5. Canlı Altın ve Kıymetli Madenler
+### 5. Altın ve Kıymetli Madenler
 ```python
 # Gram Altın, Çeyrek Altın, Ata Altın vb.
 gram = client.gold.get("ALTIN")
@@ -99,7 +99,7 @@ tahviller = client.bonds.list()
 
 ---
 
-## 📊 Pandas ile Finansal Analiz & Algoritmik Ticaret
+## 📊 Pandas ile Finansal Analiz & Veri Modelleme
 
 ```python
 import pandas as pd
@@ -115,7 +115,7 @@ en_cok_artanlar = df.sort_values(by="changePercent", ascending=False).head(10)
 print(en_cok_artanlar[["symbol", "name", "price", "changePercent", "volume"]])
 
 # CSV veya Excel'e aktarın
-df.to_csv("bist_canli_fiyatlar.csv", index=False)
+df.to_csv("bist_fiyatlar.csv", index=False)
 ```
 
 ---
@@ -169,7 +169,11 @@ client = BurkutClient(
 
 ## ⚖️ Yasal Uyarı & Feragatname (Disclaimer)
 
-> **Önemli:** Bu kütüphane tamamen eğitim ve kişisel araştırma amaçlı geliştirilmiştir. Resmi Borsa İstanbul verisi sağlamaz, yatırım tavsiyesi içermez. Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu garanti edilmez.
+> **Önemli Yasal Bilgilendirme:** Bu kütüphane ve sağlanan API, tamamen **eğitim, kişisel araştırma ve hobi amaçlı** geliştirilmiştir.
+> - **Resmi Veri Sağlayıcısı Değildir:** Bürküt bir borsa aracı kurumu, yatırım kuruluşu veya lisanslı borsa veri dağıtıcısı değildir.
+> - **15 Dakika Gecikmeli Veri:** Borsa İstanbul (BIST) pay piyasası verileri yasal düzenlemeler gereği en az 15 dakika gecikmelidir.
+> - **Yatırım Tavsiyesi Değildir:** Burada veya kütüphane aracılığıyla sunulan veriler hiçbir şekilde yatırım danışmanlığı, al-sat tavsiyesi veya finansal yönlendirme içermez.
+> - **Garanti Taahhüt Edilmez:** Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu, eksiksizliği veya kesintisizliği taahhüt edilmez.
 
 ---
 

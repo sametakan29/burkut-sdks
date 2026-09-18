@@ -1,5 +1,5 @@
 """
-Bürküt Finansal Veri API - Resmi Python SDK
+Bürküt Finansal Veri API - Açık Kaynak Python SDK
 """
 
 from burkut.client import BurkutClient

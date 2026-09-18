@@ -3,7 +3,7 @@ import type { StockItem } from '../types';
 
 export class StocksResource extends BaseResource {
   /**
-   * Borsa İstanbul hisse senetlerini listeler.
+   * Borsa İstanbul hisse senetlerini listeler (15 dk gecikmeli).
    * @param symbols İsteğe bağlı filtreleme yapılacak hisse sembolleri (Örn: ['THYAO', 'GARAN'])
    */
   async list(symbols?: string[]): Promise<StockItem[]> {
@@ -15,7 +15,7 @@ export class StocksResource extends BaseResource {
   }
 
   /**
-   * Tek bir hisse senedinin anlık detaylı verilerini getirir.
+   * Tek bir hisse senedinin detaylı verilerini getirir (15 dk gecikmeli).
    * @param symbol Hisse sembol kodu (Örn: 'THYAO', 'GARAN')
    */
   async get(symbol: string): Promise<StockItem> {

@@ -3,7 +3,7 @@ import type { ForexItem } from '../types';
 
 export class ForexResource extends BaseResource {
   /**
-   * Tüm canlı döviz kurlarını listeler.
+   * Tüm döviz kurlarını listeler.
    */
   async list(): Promise<ForexItem[]> {
     return this._get<ForexItem[]>('/forex');
