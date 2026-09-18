@@ -1,8 +1,9 @@
 # ⚡ Bürküt Node.js & TypeScript SDK
 
-[![npm version](https://img.shields.io/npm/v/burkut.svg?style=flat-square&color=red)](https://www.npmjs.com/package/burkut)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178c6.svg?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
+[![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg?style=flat-square)](https://github.com/sametakan29/burkut-sdks/releases)
+[![npm](https://img.shields.io/badge/npm-burkut-cb3837?style=flat-square&logo=npm&logoColor=white)](https://www.npmjs.com/package/burkut)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6.svg?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933.svg?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 **Borsa İstanbul (BIST), TEFAS Yatırım Fonları, Döviz, Altın ve VİOP Piyasaları için Resmi Node.js ve TypeScript İstemcisi.**

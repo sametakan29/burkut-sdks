@@ -4,11 +4,12 @@
 
 ### Borsa İstanbul (BIST), TEFAS Fonları, Döviz, Altın & VİOP İçin Resmi ve Ultra Hızlı Veri Kütüphanesi
 
-[![PyPI version](https://img.shields.io/pypi/v/burkut.svg?style=flat-square&color=blue)](https://pypi.org/project/burkut/)
-[![npm version](https://img.shields.io/npm/v/burkut.svg?style=flat-square&color=red)](https://www.npmjs.com/package/burkut)
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178c6.svg?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg?style=flat-square)](https://github.com/sametakan29/burkut-sdks/releases)
+[![PyPI](https://img.shields.io/badge/PyPI-burkut-blue?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/burkut/)
+[![npm](https://img.shields.io/badge/npm-burkut-cb3837?style=flat-square&logo=npm&logoColor=white)](https://www.npmjs.com/package/burkut)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933.svg?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6.svg?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![API Status](https://img.shields.io/badge/API_Status-Online-success?style=flat-square)](https://api.burkutportfoy.com)
 
