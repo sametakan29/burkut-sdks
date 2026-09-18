@@ -165,5 +165,13 @@ client = BurkutClient(
 ## 🔑 Ücretsiz API Anahtarı Alma
 Ücretsiz API anahtarınızı 1 dakikada oluşturmak için [Bürküt Geliştirici Portalı](https://burkutportfoy.com/developer)'nı ziyaret edin.
 
+---
+
+## ⚖️ Yasal Uyarı & Feragatname (Disclaimer)
+
+> **Önemli:** Bu kütüphane tamamen eğitim ve kişisel araştırma amaçlı geliştirilmiştir. Resmi Borsa İstanbul verisi sağlamaz, yatırım tavsiyesi içermez. Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu garanti edilmez.
+
+---
+
 ## 📄 Lisans
 Bu kütüphane [MIT Lisansı](https://github.com/sametakan29/burkut-sdks/blob/main/LICENSE) ile lisanslanmıştır.
