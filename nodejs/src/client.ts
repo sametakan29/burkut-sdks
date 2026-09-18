@@ -18,7 +18,7 @@ import type { BurkutClientOptions } from './types';
 
 declare const process: any;
 
-const DEFAULT_BASE_URL = 'https://burkutportfoy.com/api/public/v1';
+const DEFAULT_BASE_URL = 'https://api.burkutportfoy.com/api/public/v1';
 const DEFAULT_TIMEOUT_MS = 15000;
 const SDK_VERSION = '1.0.0';
 
