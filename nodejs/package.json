@@ -40,7 +40,7 @@
   "homepage": "https://burkutportfoy.com/developers",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sametakan29/burkut-sdks.git",
+    "url": "git+https://github.com/sametakan29/burkut-sdks.git",
     "directory": "nodejs"
   },
   "bugs": {
