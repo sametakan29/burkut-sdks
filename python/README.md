@@ -1,10 +1,23 @@
-# Bürküt Python SDK 🐍
+# 🦅 Bürküt Python SDK
 
-[![PyPI version](https://img.shields.io/pypi/v/burkut.svg)](https://pypi.org/project/burkut/)
-[![Python versions](https://img.shields.io/pypi/pyversions/burkut.svg)](https://pypi.org/project/burkut/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://img.shields.io/pypi/v/burkut.svg?style=flat-square&color=blue)](https://pypi.org/project/burkut/)
+[![Python versions](https://img.shields.io/pypi/pyversions/burkut.svg?style=flat-square)](https://pypi.org/project/burkut/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Downloads](https://img.shields.io/pypi/dm/burkut.svg?style=flat-square)](https://pypi.org/project/burkut/)
 
-Bürküt Finansal Veri API'sinin resmi Python kütüphanesidir. **Sıfır dış bağımlılık** ile çalışır; ekstra kütüphane (`requests`, `urllib3` vb.) yüklemesi gerektirmez, Python'un yerel standart kütüphanesi üzerinde ultra hızlı ve hafif bir şekilde çalışır.
+**Borsa İstanbul (BIST), TEFAS Yatırım Fonları, Canlı Döviz, Altın ve VİOP Piyasaları için Resmi ve Sıfır Bağımlılıklı Python İstemcisi.**
+
+Bürküt Finansal Veri API'sinin resmi Python kütüphanesidir. `requests` veya `urllib3` gibi hiçbir harici paket kurmanıza gerek kalmadan, Python'un yerel standart kütüphanesi üzerinde **ultra hafif, stabil ve yüksek hızlı** çalışır.
+
+---
+
+## 🚀 Neden `burkut`?
+
+* ⚡ **Sıfır Dış Bağımlılık (Zero-Dependency):** Sadece Python standart kütüphanesini kullanır. Projenizin bağımlılık ağacını şişirmez.
+* 📈 **Hepsi Bir Arada:** BIST hisseleri, TEFAS fonları, canlı altın & döviz, tahvil ve VİOP verileri tek çatı altında.
+* 🐼 **Pandas & Data Science Uyumlu:** Tek satırda DataFrame'e dönüştürün, algoritmik modellerinizi besleyin.
+* 🛡️ **Web Scraping Değil, Güvenilir REST API:** Kaynak sitelerin HTML yapısı değişince bozulan kırılgan scraper'lara veda edin.
+* 🧠 **Tam Tip Desteği (Type Hints):** PyCharm ve VS Code üzerinde kusursuz otomatik tamamlama (IntelliSense).
 
 ---
 
@@ -14,99 +27,143 @@ Bürküt Finansal Veri API'sinin resmi Python kütüphanesidir. **Sıfır dış 
 pip install burkut
 ```
 
-Veya bu repodan doğrudan yüklemek için:
-```bash
-git clone https://github.com/sametakan29/burkut-sdks.git
-cd burkut-sdks/python
-pip install .
-```
-
 ---
 
 ## ⚡ Hızlı Başlangıç
 
+### 1. İstemciyi Başlatma
 ```python
 from burkut import BurkutClient
 
-# API anahtarınız ile istemciyi başlatın
-# (Veya BURKUT_API_KEY ortam değişkenini ayarlayabilirsiniz)
+# API anahtarınızı girin (Veya BURKUT_API_KEY ortam değişkenini ayarlayın)
 client = BurkutClient(api_key="bk_live_...")
+```
 
-# 1. BIST Hisse Senedi Verileri
+### 2. Borsa İstanbul (BIST) Hisse Senetleri
+```python
+# Tek bir hisse sorgulama
 thyao = client.stocks.get("THYAO")
-print(f"Hisse: {thyao['symbol']}, Son Fiyat: {thyao['last_price']} TL, Değişim: %{thyao['change_rate']}")
+print(f"Hisse: {thyao['name']} ({thyao['symbol']})")
+print(f"Fiyat: {thyao['price']} TL | Günlük Değişim: %{thyao['changePercent']}")
+print(f"İşlem Hacmi: {thyao['volume']:,} TL")
 
-# Birden fazla hisseyi tek seferde getirme
-stocks = client.stocks.list(symbols=["THYAO", "GARAN", "ASELS", "EREGL"])
-for s in stocks:
-    print(s["symbol"], s["last_price"])
+# Belirli hisseleri topluca çekme
+portfoy = client.stocks.list(symbols=["THYAO", "GARAN", "ASELS", "EREGL", "TUPRS"])
+for hisse in portfoy:
+    print(f"{hisse['symbol']}: {hisse['price']} TL")
+```
 
-# 2. Canlı Döviz Kurları (Forex)
-usd = client.forex.get("USDTRY")
-print(f"Dolar/TL: {usd['buying']} / {usd['selling']}")
+### 3. TEFAS Yatırım Fonları
+```python
+# Fon detayları ve fiyatı
+tcd = client.funds.get("TCD")
+print(f"Fon Adı: {tcd['name']}")
+print(f"Birim Pay Fiyatı: {tcd['price']} TL")
 
-# Tüm kurları listeleme
-all_forex = client.forex.list()
+# Tüm fonları listeleme
+tum_fonlar = client.funds.list()
+print(f"Toplam listelenen fon adedi: {len(tum_fonlar)}")
+```
 
-# 3. Altın ve Kıymetli Madenler
-gram_altin = client.gold.get("ALTIN_GRAM")
-ceyrek = client.gold.get("ALTIN_CEYREK")
-print(f"Gram Altın: {gram_altin['buying']} TL")
+### 4. Canlı Serbest Piyasa & TCMB Döviz Kurları
+```python
+# Dolar ve Euro
+usd = client.forex.get("USD")
+eur = client.forex.get("EUR")
 
-# 4. TEFAS Yatırım Fonları
-fon = client.funds.get("TCD")
-print(f"Fon Adı: {fon['name']}, Fiyat: {fon['price']}")
+print(f"Dolar/TL: {usd['buyRate']} (Alış) - {usd['sellRate']} (Satış)")
+print(f"Euro/TL:  {eur['buyRate']} (Alış) - {eur['sellRate']} (Satış)")
 
-# 5. Tahvil ve Bono
-bonds = client.bonds.list()
+# Tüm kurları listeleme (20+ para birimi)
+all_currencies = client.forex.list()
+```
 
-# 6. VİOP Sözleşmeleri
-viop = client.viop.list()
+### 5. Canlı Altın ve Kıymetli Madenler
+```python
+# Gram Altın, Çeyrek Altın, Ata Altın vb.
+gram = client.gold.get("ALTIN")
+ceyrek = client.gold.get("CEYREK_YENI")
+
+print(f"Gram Altın Fiyatı:   {gram['price']} TL (%{gram['changePercent']})")
+print(f"Çeyrek Altın Fiyatı: {ceyrek['price']} TL")
+```
+
+### 6. VİOP ve Tahvil/Bono Verileri
+```python
+# Vadeli İşlem ve Opsiyon Piyasası sözleşmeleri
+viop_sozlesmeleri = client.viop.list()
+
+# Devlet tahvilleri ve faiz oranları
+tahviller = client.bonds.list()
 ```
 
 ---
 
-## 🛡️ Hata Yönetimi (Exception Handling)
+## 📊 Pandas ile Finansal Analiz & Algoritmik Ticaret
 
-SDK, HTTP durum kodlarına ve API hata yanıtlarına göre özel istisnalar fırlatır:
+```python
+import pandas as pd
+from burkut import BurkutClient
+
+client = BurkutClient()
+
+# BIST verilerini tek satırda DataFrame'e aktarın
+df = pd.DataFrame(client.stocks.list())
+
+# Günlük bazda en çok prim yapan hisseleri filtreleyin
+en_cok_artanlar = df.sort_values(by="changePercent", ascending=False).head(10)
+print(en_cok_artanlar[["symbol", "name", "price", "changePercent", "volume"]])
+
+# CSV veya Excel'e aktarın
+df.to_csv("bist_canli_fiyatlar.csv", index=False)
+```
+
+---
+
+## 🛡️ Hata Yönetimi
 
 ```python
 from burkut import (
     BurkutClient,
     AuthenticationError,
-    ForbiddenError,
-    NotFoundError,
     RateLimitError,
     QuotaExceededError,
+    NotFoundError,
+    BurkutError
 )
 
-client = BurkutClient("bk_live_...")
+client = BurkutClient()
 
 try:
-    data = client.stocks.get("THYAO")
+    veri = client.stocks.get("THYAO")
 except AuthenticationError:
-    print("Geçersiz veya eksik API anahtarı!")
-except QuotaExceededError:
-    print("Aylık istek kotanız tükendi. PRO plana yükseltin!")
+    print("API anahtarınız geçersiz veya eksik.")
 except RateLimitError as e:
-    print(f"Hız limiti aşıldı. Lütfen {e.retry_after} saniye sonra tekrar deneyin.")
+    print(f"Hız limitine ulaşıldı. {e.retry_after} saniye sonra tekrar deneyin.")
+except QuotaExceededError:
+    print("Aylık istek kotanız tükendi. https://burkutportfoy.com adresinden PRO plana geçebilirsiniz.")
 except NotFoundError:
-    print("Aranan sembol bulunamadı.")
+    print("Sembol bulunamadı.")
+except BurkutError as e:
+    print(f"API Hatası [{e.status_code}]: {e.message}")
 ```
 
 ---
 
-## ⚙️ Yapılandırma Seçenekleri
+## ⚙️ Özel Yapılandırma
 
 ```python
 client = BurkutClient(
     api_key="bk_live_...",
     timeout=10.0,  # Zaman aşımı süresi (saniye, varsayılan: 15.0)
-    base_url="https://burkutportfoy.com/api/public/v1",  # Özel endpoint
+    base_url="https://api.burkutportfoy.com/api/public/v1",  # Özel endpoint
 )
 ```
 
 ---
 
+## 🔑 Ücretsiz API Anahtarı Alma
+Ücretsiz API anahtarınızı 1 dakikada oluşturmak için [Bürküt Geliştirici Portalı](https://burkutportfoy.com/developer)'nı ziyaret edin.
+
 ## 📄 Lisans
-MIT License - [Detaylar](../../LICENSE)
+Bu kütüphane [MIT Lisansı](https://github.com/sametakan29/burkut-sdks/blob/main/LICENSE) ile lisanslanmıştır.
