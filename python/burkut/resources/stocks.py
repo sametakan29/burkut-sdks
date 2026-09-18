@@ -7,7 +7,7 @@ from burkut.resources.base import BaseResource
 
 
 class StocksResource(BaseResource):
-    """Borsa İstanbul (BIST) hisse senedi verileri."""
+    """Borsa İstanbul (BIST) hisse senedi verileri (15 dk gecikmeli)."""
 
     def list(self, symbols: Optional[List[str]] = None) -> List[Dict[str, Any]]:
         """
@@ -17,7 +17,7 @@ class StocksResource(BaseResource):
             symbols: İsteğe bağlı olarak sadece belirli sembolleri filtreler (Örn: ["THYAO", "GARAN", "ASELS"])
 
         Returns:
-            Hisse senetlerinin anlık fiyat, değişim ve hacim verileri listesi.
+            Hisse senetlerinin 15 dk gecikmeli fiyat, değişim ve hacim verileri listesi.
         """
         params = {}
         if symbols:
@@ -27,13 +27,13 @@ class StocksResource(BaseResource):
 
     def get(self, symbol: str) -> Dict[str, Any]:
         """
-        Tek bir hisse senedinin detaylı anlık verilerini getirir.
+        Tek bir hisse senedinin detaylı verilerini getirir (15 dk gecikmeli).
 
         Args:
             symbol: Hisse senedi sembol kodu (Örn: 'THYAO', 'GARAN', 'EREGL')
 
         Returns:
-            Hisse senedine ait son fiyat, günlük yüksek/düşük, hacim ve değişim bilgileri.
+            Hisse senedine ait 15 dk gecikmeli son fiyat, günlük yüksek/düşük, hacim ve değişim bilgileri.
         """
         if not symbol or not isinstance(symbol, str):
             raise ValueError("symbol parametresi boş olamaz.")

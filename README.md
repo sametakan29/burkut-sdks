@@ -2,7 +2,7 @@
 
 # 🦅 Bürküt Finans SDK
 
-### Borsa İstanbul (BIST), TEFAS Fonları, Döviz, Altın & VİOP İçin Resmi ve Ultra Hızlı Veri Kütüphanesi
+### Borsa İstanbul (BIST - 15 Dk Gecikmeli), TEFAS Fonları, Döviz ve Altın İçin Açık Kaynak Araştırma Kütüphanesi
 
 [![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg?style=flat-square)](https://github.com/sametakan29/burkut-sdks/releases)
 [![PyPI](https://img.shields.io/badge/PyPI-burkut-blue?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/burkut/)
@@ -21,22 +21,22 @@
 
 ## 📌 Neden Bürküt SDK?
 
-Türkiye finansal piyasalarında veri çekmek için geliştiriciler yıllarca dengesiz HTML scraping araçlarıyla, gecikmeli Yahoo Finance verileriyle ya da sürekli IP ban yiyen botlarla uğraşmak zorunda kaldı. 
+Türkiye finansal piyasalarında veri çekmek için geliştiriciler yıllarca dengesiz HTML scraping araçlarıyla ya da sürekli IP ban yiyen botlarla uğraşmak zorunda kaldı. 
 
-**Bürküt SDK**, tüm Türkiye finans ekosistemini (BIST hisseleri, TEFAS yatırım fonları, serbest piyasa döviz, altın, tahvil ve VİOP) tek bir standart çatı altında, **sıfır dış bağımlılık (Zero-Dependency)** ve **<100ms ultra düşük gecikme** ile sunan kurumsal seviyede açık kaynak kütüphanedir.
+**Bürküt SDK**, Türkiye finansal veri ekosistemini (15 dk gecikmeli BIST pay piyasası, TEFAS yatırım fonları, serbest piyasa döviz ve altın) tek bir standart çatı altında, **sıfır dış bağımlılık (Zero-Dependency)** ile geliştiricilere ve veri araştırmacılarına sunan açık kaynaklı bir kütüphanedir.
 
 ### ⚔️ Karşılaştırma Tablosu
 
 | Özellik | 🦅 Bürküt SDK | yfinance | borsapy / pytefas | Web Scrapers |
 |:---|:---:|:---:|:---:|:---:|
-| **BIST 100 / Tüm Hisseler** | ✅ Canlı & Anlık | ⚠️ 15 Dk Gecikmeli | ⚠️ Kırılgan Scraping | ❌ Çok Yavaş |
-| **TEFAS Yatırım Fonları** | ✅ Resmi JSON API | ❌ Desteklenmiyor | ⚠️ Yalnızca Fonlar | ⚠️ IP Ban Riski |
-| **Canlı Altın & Döviz** | ✅ Anlık Fiyatlar | ⚠️ Sınırlı Pariteler | ⚠️ Karışık Kaynaklar | ❌ Bakım Zor |
+| **BIST 100 / Tüm Hisseler** | ⏱️ **15 Dk Gecikmeli** | ⏱️ 15 Dk Gecikmeli | ⚠️ Kırılgan Scraping | ❌ Çok Yavaş |
+| **TEFAS Yatırım Fonları** | ✅ Halka Açık Veri API | ❌ Desteklenmiyor | ⚠️ Yalnızca Fonlar | ⚠️ IP Ban Riski |
+| **Altın & Döviz** | ✅ Piyasa Kurları | ⚠️ Sınırlı Pariteler | ⚠️ Karışık Kaynaklar | ❌ Bakım Zor |
 | **VİOP & Tahvil / Bono** | ✅ Eksiksiz | ❌ Yok | ❌ Yok | ❌ Yok |
 | **Dış Bağımlılık (Dependencies)** | 🚀 **0 Bağımlılık** | ❌ 10+ Kütüphane | ❌ Pandas/BS4 Şart | ❌ Selenium/BS4 |
 | **Tip Güvenliği (Type-Safe)** | ✅ Tam Type Hints / `.d.ts` | ❌ Zayıf | ⚠️ Kısmi | ❌ Yok |
-| **TypeScript / Node.js** | ✅ Resmi SDK | ❌ Sadece Python | ❌ Sadece Python | ❌ Manuel |
-| **Kesinti & Patlama Riski** | 🛡️ **%0 (Kurumsal REST API)** | ⚠️ Yahoo UI Değişince | ⚠️ Kaynak HTML Değişince | 🚨 Çok Yüksek |
+| **TypeScript / Node.js** | ✅ Açık Kaynak SDK | ❌ Sadece Python | ❌ Sadece Python | ❌ Manuel |
+| **Kesinti & Patlama Riski** | 🛡️ Minimum (REST API & Cache) | ⚠️ Yahoo UI Değişince | ⚠️ Kaynak HTML Değişince | 🚨 Çok Yüksek |
 
 ---
 
@@ -74,7 +74,7 @@ print(f"{thyao['name']}: {thyao['price']} TL (Değişim: %{thyao['changePercent'
 tcd = client.funds.get("TCD")
 print(f"Fon: {tcd['name']} - Fiyat: {tcd['price']} TL")
 
-# 3. Canlı Döviz & Altın Piyasası
+# 3. Döviz & Altın Piyasası
 usd = client.forex.get("USD")
 altin = client.gold.get("ALTIN")
 print(f"Dolar: {usd['buyRate']} TL | Gram Altın: {altin['price']} TL")
@@ -87,7 +87,7 @@ import { BurkutClient } from 'burkut';
 const client = new BurkutClient({ apiKey: 'bk_live_...' });
 
 async function main() {
-  // BIST Hisseleri
+  // BIST Hisseleri (15 Dk Gecikmeli)
   const stock = await client.stocks.get('GARAN');
   console.log(`${stock.name}: ${stock.price} TL`);
 
@@ -184,12 +184,12 @@ except NotFoundError:
 
 ```text
 burkut-sdks/
-├── python/               # Resmi Python SDK (pip install burkut)
+├── python/               # Python SDK (pip install burkut)
 │   ├── burkut/           # Client, Exception sınıfları ve alt modüller
 │   ├── tests/            # %100 kapsamlı birim testleri
 │   └── pyproject.toml    # Standart PyPI paket konfigürasyonu
 │
-├── nodejs/               # Resmi Node.js & TypeScript SDK (npm install burkut)
+├── nodejs/               # Node.js & TypeScript SDK (npm install burkut)
 │   ├── src/              # TypeScript kaynak kodları
 │   ├── dist/             # Derlenmiş CJS & ESM modülleri (.d.ts tipleriyle)
 │   ├── test/             # Yerleşik Node.js birim testleri
@@ -219,7 +219,11 @@ burkut-sdks/
 
 ## ⚖️ Yasal Uyarı & Feragatname (Disclaimer)
 
-> **Önemli:** Bu kütüphane tamamen eğitim ve kişisel araştırma amaçlı geliştirilmiştir. Resmi Borsa İstanbul verisi sağlamaz, yatırım tavsiyesi içermez. Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu garanti edilmez.
+> **Önemli Yasal Bilgilendirme:** Bu kütüphane ve sağlanan API, tamamen **eğitim, kişisel araştırma ve hobi amaçlı** geliştirilmiştir.
+> - **Resmi Veri Sağlayıcısı Değildir:** Bürküt bir borsa aracı kurumu, yatırım kuruluşu veya lisanslı borsa veri dağıtıcısı değildir.
+> - **15 Dakika Gecikmeli Veri:** Borsa İstanbul (BIST) pay piyasası verileri yasal düzenlemeler gereği en az 15 dakika gecikmelidir.
+> - **Yatırım Tavsiyesi Değildir:** Burada veya kütüphane aracılığıyla sunulan veriler hiçbir şekilde yatırım danışmanlığı, al-sat tavsiyesi veya finansal yönlendirme içermez.
+> - **Garanti Taahhüt Edilmez:** Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu, eksiksizliği veya kesintisizliği taahhüt edilmez.
 
 ---
 
