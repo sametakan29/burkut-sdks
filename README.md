@@ -217,6 +217,10 @@ burkut-sdks/
 4. Dalınıza push'layın (`git push origin feature/yeni-ozellik`).
 5. Bir **Pull Request** açın.
 
+## ⚖️ Yasal Uyarı & Feragatname (Disclaimer)
+
+> **Önemli:** Bu kütüphane tamamen eğitim ve kişisel araştırma amaçlı geliştirilmiştir. Resmi Borsa İstanbul verisi sağlamaz, yatırım tavsiyesi içermez. Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu garanti edilmez.
+
 ---
 
 ## 📄 Lisans
