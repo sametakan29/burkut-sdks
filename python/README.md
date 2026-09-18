@@ -1,9 +1,9 @@
 # 🦅 Bürküt Python SDK
 
-[![PyPI version](https://img.shields.io/pypi/v/burkut.svg?style=flat-square&color=blue)](https://pypi.org/project/burkut/)
-[![Python versions](https://img.shields.io/pypi/pyversions/burkut.svg?style=flat-square)](https://pypi.org/project/burkut/)
+[![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg?style=flat-square)](https://github.com/sametakan29/burkut-sdks/releases)
+[![PyPI](https://img.shields.io/badge/PyPI-burkut-blue?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/burkut/)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Downloads](https://img.shields.io/pypi/dm/burkut.svg?style=flat-square)](https://pypi.org/project/burkut/)
 
 **Borsa İstanbul (BIST), TEFAS Yatırım Fonları, Canlı Döviz, Altın ve VİOP Piyasaları için Resmi ve Sıfır Bağımlılıklı Python İstemcisi.**
 
