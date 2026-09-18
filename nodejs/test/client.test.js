@@ -24,7 +24,7 @@ test('BurkutClient initialization without API key throws AuthenticationError', (
 test('BurkutClient initialization with API key sets properties', () => {
   const client = new BurkutClient({ apiKey: 'bk_live_test_key' });
   assert.strictEqual(client.apiKey, 'bk_live_test_key');
-  assert.strictEqual(client.baseUrl, 'https://burkutportfoy.com/api/public/v1');
+  assert.strictEqual(client.baseUrl, 'https://api.burkutportfoy.com/api/public/v1');
 });
 
 test('StocksResource builds correct URL and headers', async () => {

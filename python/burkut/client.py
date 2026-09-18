@@ -26,7 +26,7 @@ from burkut.resources.gold import GoldResource
 from burkut.resources.stocks import StocksResource
 from burkut.resources.viop import ViopResource
 
-DEFAULT_BASE_URL = "https://burkutportfoy.com/api/public/v1"
+DEFAULT_BASE_URL = "https://api.burkutportfoy.com/api/public/v1"
 DEFAULT_TIMEOUT = 15.0
 SDK_VERSION = "1.0.0"
 

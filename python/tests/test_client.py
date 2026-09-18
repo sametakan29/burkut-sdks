@@ -24,7 +24,7 @@ class TestBurkutClient(unittest.TestCase):
     def test_init_with_key_success(self):
         client = BurkutClient(api_key="bk_live_test_123")
         self.assertEqual(client.api_key, "bk_live_test_123")
-        self.assertEqual(client.base_url, "https://burkutportfoy.com/api/public/v1")
+        self.assertEqual(client.base_url, "https://api.burkutportfoy.com/api/public/v1")
 
     def test_init_with_env_var(self):
         with patch.dict("os.environ", {"BURKUT_API_KEY": "bk_env_key"}):
