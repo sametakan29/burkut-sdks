@@ -10,6 +10,7 @@ authors = [
 ]
 description = "Bürküt Finansal Veri API için resmi Python SDK kütüphanesi. BIST hisseleri, döviz, altın, fon ve tahvil verilerine anında erişim."
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -21,7 +22,6 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Topic :: Office/Business :: Financial :: Investment",
     "Intended Audience :: Financial and Insurance Industry",
