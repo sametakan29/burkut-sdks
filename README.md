@@ -10,6 +10,7 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933.svg?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6.svg?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![MCP](https://img.shields.io/badge/MCP-Server%20Ready-blueviolet?style=flat-square&logo=anthropic&logoColor=white)](https://github.com/sametakan29/burkut-sdks/tree/main/mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![API Status](https://img.shields.io/badge/API_Status-Online-success?style=flat-square)](https://api.burkutportfoy.com)
 
@@ -23,7 +24,7 @@
 
 Türkiye finansal piyasalarında veri çekmek için geliştiriciler yıllarca dengesiz HTML scraping araçlarıyla ya da sürekli IP ban yiyen botlarla uğraşmak zorunda kaldı. 
 
-**Bürküt SDK**, Türkiye finansal veri ekosistemini (15 dk gecikmeli BIST pay piyasası, TEFAS yatırım fonları, serbest piyasa döviz ve altın) tek bir standart çatı altında, **sıfır dış bağımlılık (Zero-Dependency)** ile geliştiricilere ve veri araştırmacılarına sunan açık kaynaklı bir kütüphanedir.
+**Bürküt SDK**, Türkiye finansal veri ekosistemini (15 dk gecikmeli BIST pay piyasası, TEFAS yatırım fonları, serbest piyasa döviz ve altın) tek bir standart çatı altında, **sıfır dış bağımlılık (Zero-Dependency)** ile geliştiricilere, yapay zeka ajanlarına ve veri araştırmacılarına sunan açık kaynaklı bir kütüphanedir.
 
 ### ⚔️ Karşılaştırma Tablosu
 
@@ -33,6 +34,7 @@ Türkiye finansal piyasalarında veri çekmek için geliştiriciler yıllarca de
 | **TEFAS Yatırım Fonları** | ✅ Halka Açık Veri API | ❌ Desteklenmiyor | ⚠️ Yalnızca Fonlar | ⚠️ IP Ban Riski |
 | **Altın & Döviz** | ✅ Piyasa Kurları | ⚠️ Sınırlı Pariteler | ⚠️ Karışık Kaynaklar | ❌ Bakım Zor |
 | **VİOP & Tahvil / Bono** | ✅ Eksiksiz | ❌ Yok | ❌ Yok | ❌ Yok |
+| **Model Context Protocol (MCP)** | 🤖 **Tam Destek (Claude/Cursor)** | ❌ Yok | ❌ Yok | ❌ Yok |
 | **Dış Bağımlılık (Dependencies)** | 🚀 **0 Bağımlılık** | ❌ 10+ Kütüphane | ❌ Pandas/BS4 Şart | ❌ Selenium/BS4 |
 | **Tip Güvenliği (Type-Safe)** | ✅ Tam Type Hints / `.d.ts` | ❌ Zayıf | ⚠️ Kısmi | ❌ Yok |
 | **TypeScript / Node.js** | ✅ Açık Kaynak SDK | ❌ Sadece Python | ❌ Sadece Python | ❌ Manuel |
@@ -53,6 +55,12 @@ npm install burkut
 # veya
 pnpm add burkut
 ```
+
+### 🤖 Model Context Protocol (MCP Server - Claude Desktop & Cursor)
+```bash
+npx -y burkut-mcp
+```
+Detaylı Claude Desktop ve Cursor entegrasyon kılavuzu için [`mcp/README.md`](mcp/README.md) dosyasına bakın.
 
 ---
 
@@ -184,6 +192,11 @@ except NotFoundError:
 
 ```text
 burkut-sdks/
+├── mcp/                  # Model Context Protocol Server (npx -y burkut-mcp)
+│   ├── src/              # TypeScript MCP araçları & API istemcisi
+│   ├── dist/             # Derlenmiş stdio JSON-RPC sunucusu
+│   └── README.md         # Claude Desktop & Cursor kurulum rehberi
+│
 ├── python/               # Python SDK (pip install burkut)
 │   ├── burkut/           # Client, Exception sınıfları ve alt modüller
 │   ├── tests/            # %100 kapsamlı birim testleri
@@ -206,6 +219,14 @@ burkut-sdks/
 2. E-posta adresinizi doğrulayın.
 3. [Geliştirici Portalı](https://burkutportfoy.com/developer) sayfasından **Yeni Anahtar Oluştur** butonuna tıklayın.
 4. `bk_live_...` formatındaki anahtarınızı kopyalayıp SDK'da kullanın!
+
+---
+
+## 💬 Destek ve İletişim
+
+Geliştirici soruları, entegrasyon desteği, kurumsal kota talepleri veya hata bildirimleri için:
+* **E-posta:** [destek@burkutportfoy.com](mailto:destek@burkutportfoy.com)
+* **GitHub Issues:** [burkut-sdks/issues](https://github.com/sametakan29/burkut-sdks/issues)
 
 ---
 
