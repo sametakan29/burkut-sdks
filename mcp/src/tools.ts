@@ -14,26 +14,26 @@ export interface ToolDefinition {
 export const TOOLS: ToolDefinition[] = [
   {
     name: 'burkut_search_funds',
-    description: 'Search and filter Turkish TEFAS mutual funds (Yatırım Fonları) by code, name, category, or top performance yields (1 ay, 3 ay, 6 ay, 1 yıl).',
+    description: 'TEFAS yatırım fonlarını ara, filtrele ve getirilerine (1 ay, 3 ay, 6 ay, 1 yıl) göre sırala.',
     inputSchema: {
       type: 'object',
       properties: {
         query: {
           type: 'string',
-          description: 'Search keyword matching fund code (e.g. "TI2", "MAC") or name (e.g. "Hisse", "Teknoloji", "Gümüş", "Eurobond").',
+          description: 'Fon kodu (örn: "TI2", "MAC") veya isim anahtar kelimesi (örn: "Hisse", "Teknoloji", "Gümüş", "Eurobond").',
         },
         fundType: {
           type: 'string',
-          description: 'Filter by fund type, e.g. "Hisse Senedi Fonu", "Para Piyasası Fonu", "Değişken Fon", "Kıymetli Madenler Fonu", "Borçlanma Araçları Fonu".',
+          description: 'Fon türü filtresi (örn: "Hisse Senedi Fonu", "Para Piyasası Fonu", "Değişken Fon", "Kıymetli Madenler Fonu").',
         },
         sortBy: {
           type: 'string',
           enum: ['yield1y', 'yield6m', 'yield3m', 'yield1m', 'dailyChangePct'],
-          description: 'Sort field (highest to lowest). Default is "yield1y".',
+          description: 'Sıralama ölçütü (büyükten küçüğe). Varsayılan: "yield1y".',
         },
         limit: {
           type: 'number',
-          description: 'Maximum number of funds to return (default: 15, max: 50).',
+          description: 'Döndürülecek maksimum fon sayısı (varsayılan: 15, maksimum: 50).',
         },
       },
     },
@@ -91,13 +91,13 @@ export const TOOLS: ToolDefinition[] = [
 
   {
     name: 'burkut_get_fund_detail',
-    description: 'Get in-depth metrics and multi-period returns for a specific Turkish TEFAS fund (e.g. MAC, TI2, TCD, GLDTR).',
+    description: 'Belirli bir TEFAS fonunun (örn: MAC, TI2, TCD) çoklu periyot getirilerini, risk seviyesini ve detaylı künyesini getirir.',
     inputSchema: {
       type: 'object',
       properties: {
         symbol: {
           type: 'string',
-          description: 'The 3-5 character TEFAS fund code, e.g. "MAC", "TI2", "TCD", "AFT".',
+          description: 'TEFAS fon kodu (örn: "MAC", "TI2", "TCD", "AFT").',
         },
       },
       required: ['symbol'],
@@ -110,13 +110,13 @@ export const TOOLS: ToolDefinition[] = [
 
   {
     name: 'burkut_get_stock_quote',
-    description: 'Get current price, percentage change, and volume for a Borsa Istanbul (BIST) equity (15-min delayed official feed).',
+    description: 'Borsa İstanbul (BIST) hisse senedinin 15 dk gecikmeli resmi fiyatını, günlük değişim oranını ve hacmini getirir.',
     inputSchema: {
       type: 'object',
       properties: {
         symbol: {
           type: 'string',
-          description: 'Stock symbol without exchange prefix, e.g. "THYAO", "ASELS", "KCHOL", "GARAN".',
+          description: 'Hisse sembolü (örn: "THYAO", "ASELS", "KCHOL", "GARAN").',
         },
       },
       required: ['symbol'],
@@ -128,106 +128,93 @@ export const TOOLS: ToolDefinition[] = [
   },
 
   {
-    name: 'burkut_get_kap_announcements',
-    description: 'Fetch latest Kamuyu Aydınlatma Platformu (KAP) company disclosures, material events, financial balance sheets, and corporate announcements.',
+    name: 'burkut_list_stocks',
+    description: 'Borsa İstanbul (BIST) hisselerini listeler veya virgülle ayrılmış sembol listesinin verilerini toplu çeker.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        symbols: {
+          type: 'string',
+          description: 'Virgülle ayrılmış hisse sembolleri (örn: "THYAO,ASELS,EREGL"). Belirtilmezse popüler hisseleri döner.',
+        },
+      },
+    },
+    handler: async (client, args) => {
+      const symList = args.symbols
+        ? String(args.symbols).split(',').map((s) => s.trim()).filter(Boolean)
+        : undefined;
+      const stocks = await client.getStocks(symList);
+      return JSON.stringify(stocks, null, 2);
+    },
+  },
+
+  {
+    name: 'burkut_get_forex',
+    description: 'Serbest piyasa ve TCMB döviz kurlarını (USD/TRY, EUR/TRY, GBP/TRY vb.) getirir.',
     inputSchema: {
       type: 'object',
       properties: {
         symbol: {
           type: 'string',
-          description: 'Optional stock symbol to filter disclosures for a specific firm (e.g. "THYAO"). If omitted, market-wide disclosures are returned.',
-        },
-        limit: {
-          type: 'number',
-          description: 'Number of notifications to retrieve (default: 10, max: 30).',
+          description: 'Belirli bir para birimi kodu (örn: "USD", "EUR"). Belirtilmezse tüm döviz kurlarını döner.',
         },
       },
     },
     handler: async (client, args) => {
-      const limit = Math.min(Math.max(Number(args.limit) || 10, 1), 30);
-      const data = await client.getKapAnnouncements(args.symbol, 1, limit);
+      if (args.symbol) {
+        const item = await client.getForexDetail(args.symbol);
+        return JSON.stringify(item, null, 2);
+      }
+      const data = await client.getForex();
       return JSON.stringify(data, null, 2);
     },
   },
 
   {
-    name: 'burkut_get_ipo_calendar',
-    description: 'Get the Turkish public offering (Halka Arz) calendar, including active/upcoming IPOs, offering price, dates, and subscription status.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        activeOnly: {
-          type: 'boolean',
-          description: 'If true, only returns active and upcoming IPOs. If false, returns recent IPO history too.',
-        },
-      },
-    },
-    handler: async (client, args) => {
-      const data = await client.getIpoList(Boolean(args.activeOnly));
-      return JSON.stringify(data, null, 2);
-    },
-  },
-
-  {
-    name: 'burkut_get_dividends',
-    description: 'Fetch dividend distribution history, dividend yield %, payout dates, and net payment per share for BIST companies.',
+    name: 'burkut_get_gold',
+    description: 'Gram Altın, Çeyrek Altın, Yarım Altın, Tam Altın ve Ons fiyatlarını getirir.',
     inputSchema: {
       type: 'object',
       properties: {
         symbol: {
           type: 'string',
-          description: 'Optional BIST stock symbol, e.g. "FROTO", "TUPRS", "EREGL". If omitted, upcoming market dividends are returned.',
+          description: 'Belirli bir altın türü (örn: "ALTIN", "CEYREK_ALTIN"). Belirtilmezse tüm değerli madenleri döner.',
         },
       },
     },
     handler: async (client, args) => {
-      const data = await client.getDividends(args.symbol);
+      if (args.symbol) {
+        const item = await client.getGoldDetail(args.symbol);
+        return JSON.stringify(item, null, 2);
+      }
+      const data = await client.getGold();
       return JSON.stringify(data, null, 2);
     },
   },
 
   {
-    name: 'burkut_get_macro_indicators',
-    description: 'Fetch Turkish macroeconomic indicators: official inflation rates (TÜFE / ÜFE monthly & annual), foreign exchange rates (USD/TRY, EUR/TRY), and precious metals (Gram Altın, Çeyrek Altın, Ons).',
+    name: 'burkut_get_bonds',
+    description: 'Devlet tahvilleri ve hazine bonoları faiz getirilerini listeler.',
     inputSchema: {
       type: 'object',
-      properties: {
-        category: {
-          type: 'string',
-          enum: ['all', 'inflation', 'forex', 'gold'],
-          description: 'Category to fetch: "inflation" for CPI/PPI, "forex" for FX rates, "gold" for precious metals, or "all" (default).',
-        },
-      },
+      properties: {},
     },
-    handler: async (client, args) => {
-      const category = args.category || 'all';
-      const results: Record<string, any> = {};
+    handler: async (client) => {
+      const data = await client.getBonds();
+      return JSON.stringify(data, null, 2);
+    },
+  },
 
-      if (category === 'all' || category === 'inflation') {
-        try {
-          results.inflation = await client.getInflation();
-        } catch (e: any) {
-          results.inflation = { error: e.message };
-        }
-      }
-
-      if (category === 'all' || category === 'forex') {
-        try {
-          results.forex = await client.getForex();
-        } catch (e: any) {
-          results.forex = { error: e.message };
-        }
-      }
-
-      if (category === 'all' || category === 'gold') {
-        try {
-          results.gold = await client.getGold();
-        } catch (e: any) {
-          results.gold = { error: e.message };
-        }
-      }
-
-      return JSON.stringify(results, null, 2);
+  {
+    name: 'burkut_get_viop',
+    description: 'VİOP (Vadeli İşlem ve Opsiyon Piyasası) kontratlarını ve güncel uzlaşma fiyatlarını listeler.',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+    },
+    handler: async (client) => {
+      const data = await client.getViop();
+      return JSON.stringify(data, null, 2);
     },
   },
 ];

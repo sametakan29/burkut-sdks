@@ -6,8 +6,8 @@ export interface BurkutConfig {
 
 export function getConfig(): BurkutConfig {
   const envBaseUrl = process.env.BURKUT_API_BASE_URL;
-  // Default to production API if not specified
-  const baseUrl = (envBaseUrl || 'https://api.burkutportfoy.com').replace(/\/+$/, '');
+  // Varsayılan olarak doğrudan geliştirici veri borusuna (/api/public/v1) bağlanır
+  const baseUrl = (envBaseUrl || 'https://api.burkutportfoy.com/api/public/v1').replace(/\/+$/, '');
   const apiKey = process.env.BURKUT_API_KEY || undefined;
   const timeoutMs = parseInt(process.env.BURKUT_TIMEOUT_MS || '15000', 10);
 

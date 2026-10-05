@@ -17,28 +17,23 @@ export class BurkutApiClient {
     this.config = config || getConfig();
   }
 
-  private async request<T>(path: string, options: { query?: Record<string, string | number | boolean | undefined>; usePublicV1?: boolean } = {}): Promise<T> {
-    const { query, usePublicV1 } = options;
+  private async request<T>(path: string, options: { query?: Record<string, string | number | boolean | undefined> } = {}): Promise<T> {
+    const { query } = options;
 
-    // BURKUT_API_KEY zorunludur: Kullanıcı geliştirici portalından anahtar almalıdır.
+    // BURKUT_API_KEY zorunludur: Geliştirici veri borusu (/api/public/v1) için şarttır.
     if (!this.config.apiKey || !this.config.apiKey.trim()) {
       throw new Error(
         "Bürküt API Anahtarı eksik! Bürküt MCP sunucusunu kullanabilmek için lütfen https://burkutportfoy.com/developer adresinden ücretsiz bir API anahtarı alın ve ayarlarınıza 'BURKUT_API_KEY' ortam değişkeni olarak ekleyin."
       );
     }
 
-    let resolvedPath = path;
     const headers: Record<string, string> = {
       'Accept': 'application/json',
       'User-Agent': 'burkut-mcp/1.0.2',
       'X-API-Key': this.config.apiKey.trim(),
     };
 
-    if (usePublicV1 && !path.startsWith('/api/public/v1')) {
-      resolvedPath = `/api/public/v1${path.replace(/^\/api\/v1/, '')}`;
-    }
-
-    const url = new URL(`${this.config.baseUrl}${resolvedPath}`);
+    const url = new URL(`${this.config.baseUrl}${path}`);
     if (query) {
       for (const [key, value] of Object.entries(query)) {
         if (value !== undefined && value !== null) {
@@ -92,68 +87,50 @@ export class BurkutApiClient {
 
   // --- Funds (TEFAS) ---
   async getFunds(): Promise<any[]> {
-    return this.request('/funds', { usePublicV1: true });
+    return this.request('/funds');
   }
 
   async getFundDetail(symbol: string): Promise<any> {
     const sym = normalizeSymbol(symbol);
-    return this.request(`/funds/${sym}`, { usePublicV1: true });
+    return this.request(`/funds/${sym}`);
   }
 
   // --- Stocks (BIST) ---
   async getStocks(symbols?: string[]): Promise<any[]> {
     const query = symbols && symbols.length > 0 ? { symbols: symbols.map(normalizeSymbol).join(',') } : undefined;
-    return this.request('/stocks', { query, usePublicV1: true });
+    return this.request('/stocks', { query });
   }
 
   async getStockQuote(symbol: string): Promise<any> {
     const sym = normalizeSymbol(symbol);
-    return this.request(`/stocks/${sym}`, { usePublicV1: true });
+    return this.request(`/stocks/${sym}`);
   }
 
-  // --- KAP Announcements ---
-  async getKapAnnouncements(symbol?: string, page = 1, size = 20): Promise<any> {
-    const sym = symbol ? normalizeSymbol(symbol) : undefined;
-    if (sym) {
-      return this.request(`/api/v1/kap/${sym}`, { query: { page, size } });
-    }
-    return this.request('/api/v1/kap', { query: { page, size } });
-  }
-
-  async getKapDetail(id: string): Promise<any> {
-    return this.request(`/api/v1/kap/detail/${encodeURIComponent(id.trim())}`);
-  }
-
-  // --- IPO (Halka Arz) ---
-  async getIpoList(activeOnly = false): Promise<any[]> {
-    if (activeOnly) {
-      return this.request('/api/v1/ipo/active');
-    }
-    return this.request('/api/v1/ipo');
-  }
-
-  async getIpoDetail(symbol: string): Promise<any> {
-    return this.request(`/api/v1/ipo/${normalizeSymbol(symbol)}`);
-  }
-
-  // --- Dividends (Temettü) ---
-  async getDividends(symbol?: string): Promise<any> {
-    if (symbol) {
-      return this.request(`/api/v1/dividends/${normalizeSymbol(symbol)}`);
-    }
-    return this.request('/api/v1/dividends');
-  }
-
-  // --- Macro: Inflation, Forex, Gold ---
-  async getInflation(): Promise<any> {
-    return this.request('/api/v1/turkey/inflation');
-  }
-
+  // --- Forex ---
   async getForex(): Promise<any[]> {
-    return this.request('/forex', { usePublicV1: true });
+    return this.request('/forex');
   }
 
+  async getForexDetail(symbol: string): Promise<any> {
+    return this.request(`/forex/${normalizeSymbol(symbol)}`);
+  }
+
+  // --- Gold ---
   async getGold(): Promise<any[]> {
-    return this.request('/gold', { usePublicV1: true });
+    return this.request('/gold');
+  }
+
+  async getGoldDetail(symbol: string): Promise<any> {
+    return this.request(`/gold/${normalizeSymbol(symbol)}`);
+  }
+
+  // --- Bonds ---
+  async getBonds(): Promise<any[]> {
+    return this.request('/bonds');
+  }
+
+  // --- VIOP ---
+  async getViop(): Promise<any[]> {
+    return this.request('/viop');
   }
 }
