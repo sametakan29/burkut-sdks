@@ -92,7 +92,7 @@ Claude Desktop veya Cursor'a doğrudan şu soruları sorabilirsiniz:
 
 ## Ortam Değişkenleri (Environment Variables)
 
-* `BURKUT_API_KEY`: Geliştirici API Anahtarınız (opsiyonel).
+* `BURKUT_API_KEY`: Geliştirici API Anahtarınız (zorunludur, https://burkutportfoy.com/developer adresinden ücretsiz alınır).
 * `BURKUT_API_BASE_URL`: Hedef API adresi (Varsayılan: `https://api.burkutportfoy.com`).
 * `BURKUT_TIMEOUT_MS`: İstek zaman aşımı süresi milisaniye cinsinden (Varsayılan: `15000`).
 

@@ -176,9 +176,10 @@ async function main() {
   const funds = await client.funds.list();
   console.log(`Takip Edilen Fon Sayısı: ${funds.length}`);
 
-  // Son KAP bildirimleri
-  const news = await client.kap.list({ limit: 5 });
-  news.forEach((n) => console.log(`[${n.symbol}] ${n.title}`));
+  // Döviz ve altın kurları
+  const usd = await client.forex.get('USD');
+  const gold = await client.gold.get('ALTIN');
+  console.log(`Dolar: ${usd.buyRate} TL | Gram Altın: ${gold.price} TL`);
 }
 
 main();
