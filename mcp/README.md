@@ -47,7 +47,7 @@ Aşağıdaki tanımı ekleyin:
 }
 ```
 
-> **Not:** `BURKUT_API_KEY` alanı opsiyoneldir. Anahtar girmeden de temel halka açık modda çalışır. Yüksek istek limitleri için [burkutportfoy.com/developer](https://burkutportfoy.com/developer) adresinden ücretsiz anahtar oluşturabilirsiniz.
+> **Önemli:** `BURKUT_API_KEY` zorunludur. Kotanızı takip etmek ve servisi kullanabilmek için [burkutportfoy.com/developer](https://burkutportfoy.com/developer) adresinden saniyeler içinde **ücretsiz API anahtarınızı** oluşturup buraya ekleyin.
 
 ---
 
@@ -58,6 +58,7 @@ Aşağıdaki tanımı ekleyin:
    * **Name:** `burkut`
    * **Type:** `command`
    * **Command:** `npx -y burkut-mcp`
+   * **Env:** `BURKUT_API_KEY=BURKUT_API_ANAHTARINIZ`
 
 ---
 

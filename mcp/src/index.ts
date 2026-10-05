@@ -84,7 +84,7 @@ async function main() {
   if (config.apiKey) {
     console.error(`[burkut-mcp] API Key configured: ${config.apiKey.slice(0, 6)}...`);
   } else {
-    console.error(`[burkut-mcp] Running in public mode (No BURKUT_API_KEY provided)`);
+    console.error(`[burkut-mcp] WARNING: No BURKUT_API_KEY configured. Tool calls will require an API key from https://burkutportfoy.com/developer`);
   }
 }
 

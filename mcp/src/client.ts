@@ -20,17 +20,22 @@ export class BurkutApiClient {
   private async request<T>(path: string, options: { query?: Record<string, string | number | boolean | undefined>; usePublicV1?: boolean } = {}): Promise<T> {
     const { query, usePublicV1 } = options;
 
+    // BURKUT_API_KEY zorunludur: Kullanıcı geliştirici portalından anahtar almalıdır.
+    if (!this.config.apiKey || !this.config.apiKey.trim()) {
+      throw new Error(
+        "Bürküt API Anahtarı eksik! Bürküt MCP sunucusunu kullanabilmek için lütfen https://burkutportfoy.com/developer adresinden ücretsiz bir API anahtarı alın ve ayarlarınıza 'BURKUT_API_KEY' ortam değişkeni olarak ekleyin."
+      );
+    }
+
     let resolvedPath = path;
     const headers: Record<string, string> = {
       'Accept': 'application/json',
-      'User-Agent': 'burkut-mcp/1.0.0',
+      'User-Agent': 'burkut-mcp/1.0.2',
+      'X-API-Key': this.config.apiKey.trim(),
     };
 
-    if (this.config.apiKey) {
-      headers['X-API-Key'] = this.config.apiKey;
-      if (usePublicV1 && !path.startsWith('/api/public/v1')) {
-        resolvedPath = `/api/public/v1${path.replace(/^\/api\/v1/, '')}`;
-      }
+    if (usePublicV1 && !path.startsWith('/api/public/v1')) {
+      resolvedPath = `/api/public/v1${path.replace(/^\/api\/v1/, '')}`;
     }
 
     const url = new URL(`${this.config.baseUrl}${resolvedPath}`);
@@ -65,10 +70,10 @@ export class BurkutApiClient {
           throw new Error(`Enstrüman veya veri bulunamadı (404 Not Found): ${path}`);
         }
         if (response.status === 401 || response.status === 403) {
-          throw new Error(`Yetkilendirme hatası (${response.status}): Geçersiz veya yetkisiz API Key. Lütfen burkutportfoy.com/developer üzerinden anahtarınızı kontrol edin.`);
+          throw new Error(`Yetkilendirme hatası (${response.status}): Geçersiz veya iptal edilmiş API Key. Lütfen https://burkutportfoy.com/developer üzerinden anahtarınızı kontrol edin.`);
         }
         if (response.status === 429) {
-          throw new Error(`İstek limiti aşıldı (429 Rate Limit): Lütfen birkaç saniye bekleyin veya daha yüksek kotalı bir plana geçin.`);
+          throw new Error(`Kotanız doldu veya dakikalık hız sınırına takıldınız (429 Rate Limit): Lütfen birkaç saniye bekleyin veya https://burkutportfoy.com/developer adresinden planınızı yükseltin.`);
         }
 
         throw new Error(`Bürküt API Hatası (HTTP ${response.status}): ${errorDetail || response.statusText}`);
@@ -87,35 +92,23 @@ export class BurkutApiClient {
 
   // --- Funds (TEFAS) ---
   async getFunds(): Promise<any[]> {
-    if (this.config.apiKey) {
-      return this.request('/funds', { usePublicV1: true });
-    }
-    return this.request('/api/v1/market/funds');
+    return this.request('/funds', { usePublicV1: true });
   }
 
   async getFundDetail(symbol: string): Promise<any> {
     const sym = normalizeSymbol(symbol);
-    if (this.config.apiKey) {
-      return this.request(`/funds/${sym}`, { usePublicV1: true });
-    }
-    return this.request(`/api/v1/market/funds/${sym}`);
+    return this.request(`/funds/${sym}`, { usePublicV1: true });
   }
 
   // --- Stocks (BIST) ---
   async getStocks(symbols?: string[]): Promise<any[]> {
     const query = symbols && symbols.length > 0 ? { symbols: symbols.map(normalizeSymbol).join(',') } : undefined;
-    if (this.config.apiKey) {
-      return this.request('/stocks', { query, usePublicV1: true });
-    }
-    return this.request('/api/v1/market/stocks', { query });
+    return this.request('/stocks', { query, usePublicV1: true });
   }
 
   async getStockQuote(symbol: string): Promise<any> {
     const sym = normalizeSymbol(symbol);
-    if (this.config.apiKey) {
-      return this.request(`/stocks/${sym}`, { usePublicV1: true });
-    }
-    return this.request(`/api/v1/market/stocks/${sym}`);
+    return this.request(`/stocks/${sym}`, { usePublicV1: true });
   }
 
   // --- KAP Announcements ---
@@ -157,16 +150,10 @@ export class BurkutApiClient {
   }
 
   async getForex(): Promise<any[]> {
-    if (this.config.apiKey) {
-      return this.request('/forex', { usePublicV1: true });
-    }
-    return this.request('/api/v1/market/forex');
+    return this.request('/forex', { usePublicV1: true });
   }
 
   async getGold(): Promise<any[]> {
-    if (this.config.apiKey) {
-      return this.request('/gold', { usePublicV1: true });
-    }
-    return this.request('/api/v1/market/gold');
+    return this.request('/gold', { usePublicV1: true });
   }
 }

@@ -66,7 +66,7 @@ Aşağıdaki yapılandırmayı ekleyin:
 }
 ```
 
-> **İpucu:** `BURKUT_API_KEY` alanı opsiyoneldir. Anahtar girmeden de temel halka açık modda çalışır. Kesintisiz erişim ve yüksek kotalar için [burkutportfoy.com/developer](https://burkutportfoy.com/developer) adresinden ücretsiz anahtar oluşturabilirsiniz.
+> **Önemli:** `BURKUT_API_KEY` zorunludur. Kotanızı takip etmek ve servisi kullanabilmek için [burkutportfoy.com/developer](https://burkutportfoy.com/developer) adresinden saniyeler içinde **ücretsiz API anahtarınızı** oluşturup buraya ekleyin.
 
 ### Cursor IDE Entegrasyonu
 
@@ -75,6 +75,7 @@ Aşağıdaki yapılandırmayı ekleyin:
    * **Name:** `burkut`
    * **Type:** `command`
    * **Command:** `npx -y burkut-mcp`
+   * **Env:** `BURKUT_API_KEY=BURKUT_API_ANAHTARINIZ`
 
 ### Yapay Zekanıza Sorabileceğiniz Örnek Sorular
 
