@@ -4,6 +4,8 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
+  ListResourcesRequestSchema,
+  ListPromptsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import { BurkutApiClient } from './client.js';
 import { TOOLS } from './tools.js';
@@ -16,11 +18,13 @@ async function main() {
   const server = new Server(
     {
       name: 'burkut-mcp',
-      version: '1.0.0',
+      version: '1.0.2',
     },
     {
       capabilities: {
         tools: {},
+        resources: {},
+        prompts: {},
       },
     }
   );
@@ -35,6 +39,10 @@ async function main() {
       })),
     };
   });
+
+  // Clean empty handlers for optional protocol capabilities
+  server.setRequestHandler(ListResourcesRequestSchema, async () => ({ resources: [] }));
+  server.setRequestHandler(ListPromptsRequestSchema, async () => ({ prompts: [] }));
 
   // Handle tool calls
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
