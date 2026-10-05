@@ -1,121 +1,131 @@
-<div align="center">
+<p align="center">
+  <img src="./assets/logo.png" alt="Bürküt Logo" width="120" />
+</p>
 
-# 🦅 Bürküt Finans SDK
+<h1 align="center">Bürküt Finansal Veri Ekosistemi</h1>
 
-### Borsa İstanbul (BIST - 15 Dk Gecikmeli), TEFAS Fonları, Döviz ve Altın İçin Açık Kaynak Araştırma Kütüphanesi
+<p align="center">
+  <b>Türkiye finansal piyasaları için geliştirici odaklı veri altyapısı ve yapay zeka araçları.</b><br />
+  Borsa İstanbul (BIST), TEFAS Fonları, KAP Bildirimleri, Döviz Kurları ve Makroekonomik Göstergeler.
+</p>
 
-[![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg?style=flat-square)](https://github.com/sametakan29/burkut-sdks/releases)
-[![PyPI](https://img.shields.io/badge/PyPI-burkut-blue?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/burkut/)
-[![npm](https://img.shields.io/badge/npm-burkut-cb3837?style=flat-square&logo=npm&logoColor=white)](https://www.npmjs.com/package/burkut)
-[![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933.svg?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6.svg?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![MCP](https://img.shields.io/badge/MCP-Server%20Ready-blueviolet?style=flat-square&logo=anthropic&logoColor=white)](https://github.com/sametakan29/burkut-sdks/tree/main/mcp)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![API Status](https://img.shields.io/badge/API_Status-Online-success?style=flat-square)](https://api.burkutportfoy.com)
+<p align="center">
+  <a href="https://pypi.org/project/burkut/"><img src="https://img.shields.io/pypi/v/burkut?color=blue&style=flat-square&logo=pypi&logoColor=white" alt="PyPI" /></a>
+  <a href="https://www.npmjs.com/package/burkut"><img src="https://img.shields.io/npm/v/burkut?color=red&style=flat-square&logo=npm&logoColor=white" alt="npm" /></a>
+  <a href="https://www.npmjs.com/package/burkut-mcp"><img src="https://img.shields.io/badge/MCP-burkut--mcp-purple?style=flat-square&logo=anthropic&logoColor=white" alt="MCP" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/Lisans-MIT-gray.svg?style=flat-square" alt="Lisans" /></a>
+  <a href="https://api.burkutportfoy.com"><img src="https://img.shields.io/badge/API-Aktif-emerald?style=flat-square" alt="API Durumu" /></a>
+</p>
 
-**[Dokümantasyon](https://burkutportfoy.com/developer)** • **[Web Sitesi](https://burkutportfoy.com/developers)** • **[API Anahtarı Al](https://burkutportfoy.com/developer)** • **[Postman Koleksiyonu](https://burkutportfoy.com/burkut-api.postman_collection.json)**
-
-</div>
-
----
-
-## 📌 Neden Bürküt SDK?
-
-Türkiye finansal piyasalarında veri çekmek için geliştiriciler yıllarca dengesiz HTML scraping araçlarıyla ya da sürekli IP ban yiyen botlarla uğraşmak zorunda kaldı. 
-
-**Bürküt SDK**, Türkiye finansal veri ekosistemini (15 dk gecikmeli BIST pay piyasası, TEFAS yatırım fonları, serbest piyasa döviz ve altın) tek bir standart çatı altında, **sıfır dış bağımlılık (Zero-Dependency)** ile geliştiricilere, yapay zeka ajanlarına ve veri araştırmacılarına sunan açık kaynaklı bir kütüphanedir.
-
-### ⚔️ Karşılaştırma Tablosu
-
-| Özellik | 🦅 Bürküt SDK | yfinance | borsapy / pytefas | Web Scrapers |
-|:---|:---:|:---:|:---:|:---:|
-| **BIST 100 / Tüm Hisseler** | ⏱️ **15 Dk Gecikmeli** | ⏱️ 15 Dk Gecikmeli | ⚠️ Kırılgan Scraping | ❌ Çok Yavaş |
-| **TEFAS Yatırım Fonları** | ✅ Halka Açık Veri API | ❌ Desteklenmiyor | ⚠️ Yalnızca Fonlar | ⚠️ IP Ban Riski |
-| **Altın & Döviz** | ✅ Piyasa Kurları | ⚠️ Sınırlı Pariteler | ⚠️ Karışık Kaynaklar | ❌ Bakım Zor |
-| **VİOP & Tahvil / Bono** | ✅ Eksiksiz | ❌ Yok | ❌ Yok | ❌ Yok |
-| **Model Context Protocol (MCP)** | 🤖 **Tam Destek (Claude/Cursor)** | ❌ Yok | ❌ Yok | ❌ Yok |
-| **Dış Bağımlılık (Dependencies)** | 🚀 **0 Bağımlılık** | ❌ 10+ Kütüphane | ❌ Pandas/BS4 Şart | ❌ Selenium/BS4 |
-| **Tip Güvenliği (Type-Safe)** | ✅ Tam Type Hints / `.d.ts` | ❌ Zayıf | ⚠️ Kısmi | ❌ Yok |
-| **TypeScript / Node.js** | ✅ Açık Kaynak SDK | ❌ Sadece Python | ❌ Sadece Python | ❌ Manuel |
-| **Kesinti & Patlama Riski** | 🛡️ Minimum (REST API & Cache) | ⚠️ Yahoo UI Değişince | ⚠️ Kaynak HTML Değişince | 🚨 Çok Yüksek |
+<p align="center">
+  <a href="https://burkutportfoy.com/developers"><b>Dokümantasyon</b></a> •
+  <a href="https://burkutportfoy.com/developer"><b>Geliştirici Portalı</b></a> •
+  <a href="./mcp/README.md"><b>MCP Rehberi</b></a> •
+  <a href="https://burkutportfoy.com/burkut-api.postman_collection.json"><b>Postman Koleksiyonu</b></a>
+</p>
 
 ---
 
-## 📦 Kurulum
+## Genel Bakış
 
-### Python (3.8+)
+Bürküt Finans Ekosistemi; Türkiye sermaye piyasalarında veri çekmek için yıllardır süregelen dengesiz web kazıma (HTML scraping) araçlarına, sürekli IP ban yiyen botlara ve bozuk kütüphanelere modern bir alternatif olarak geliştirilmiştir.
+
+Tüm finansal verileri; yüksek hızlı, önbellek destekli ve tip güvenli (type-safe) bir mimari üzerinden **üç ana kanaldan** sunar:
+
+| Hedef Ortam | Paket | Kurulum / Çalıştırma | Temel Kullanım Amacı |
+| :--- | :--- | :--- | :--- |
+| **Yapay Zeka (AI / LLM)** | `burkut-mcp` | `npx -y burkut-mcp` | Claude Desktop, Cursor ve Windsurf ajanlarına canlı borsa bağlama |
+| **Python (3.8+)** | `burkut` | `pip install burkut` | Algoritmik işlemler, kantitatif finans, Pandas ile veri analizi |
+| **TypeScript / Node.js (18+)** | `burkut` | `npm install burkut` | Web servisleri, Discord/Telegram botları, kurumsal entegrasyonlar |
+
+---
+
+## 1. Model Context Protocol (MCP Server)
+
+Türkiye piyasalarını **Claude Desktop**, **Cursor IDE** veya **Windsurf** yapay zeka ajanlarınıza sıfır kurulum zahmetiyle, tek satırda bağlayın.
+
+### Claude Desktop Entegrasyonu
+
+Ayar dosyanızı açın:
+* **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+* **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+Aşağıdaki yapılandırmayı ekleyin:
+
+```json
+{
+  "mcpServers": {
+    "burkut": {
+      "command": "npx",
+      "args": ["-y", "burkut-mcp"],
+      "env": {
+        "BURKUT_API_KEY": "BURKUT_API_ANAHTARINIZ"
+      }
+    }
+  }
+}
+```
+
+> **İpucu:** `BURKUT_API_KEY` alanı opsiyoneldir. Anahtar girmeden de temel halka açık modda çalışır. Kesintisiz erişim ve yüksek kotalar için [burkutportfoy.com/developer](https://burkutportfoy.com/developer) adresinden ücretsiz anahtar oluşturabilirsiniz.
+
+### Cursor IDE Entegrasyonu
+
+1. **Cursor Settings** &rarr; **Features** &rarr; **MCP Servers** yolunu izleyin.
+2. **Add New MCP Server** butonuna tıklayın:
+   * **Name:** `burkut`
+   * **Type:** `command`
+   * **Command:** `npx -y burkut-mcp`
+
+### Yapay Zekanıza Sorabileceğiniz Örnek Sorular
+
+Entegrasyon tamamlandığında Claude veya Cursor doğrudan canlı piyasa verilerini çekip yorumlayabilir:
+
+```text
+"TEFAS'taki hisse senedi fonları arasında son 1 yılda en çok kazandıran 5 fonu ve yıllık getirilerini listele."
+"MAC ve TI2 fonlarının risk puanlarını ve son 6 aylık performanslarını karşılaştır."
+"Bugün KAP'a düşen önemli şirket bildirimlerini ve yeni iş ilişkilerini özetle."
+"Bu ay talep toplayacak halka arzlar hangileri? Dağıtım yöntemleri ve lot fiyatları nedir?"
+"FROTO ve TUPRS şirketlerinin temettü verimlerini ve geçmiş ödeme tarihlerini karşılaştırmalı tablo yap."
+"TÜİK tarafından açıklanan son yıllık TÜFE enflasyon oranı ile güncel dolar kurunu getir."
+```
+
+Detaylı MCP araç listesi ve parametreleri için [`mcp/README.md`](./mcp/README.md) dosyasına göz atın.
+
+---
+
+## 2. Python SDK
+
+### Kurulum
+
 ```bash
 pip install burkut
 ```
 
-### Node.js / TypeScript (18+)
-```bash
-npm install burkut
-# veya
-pnpm add burkut
-```
+### Hızlı Başlangıç
 
-### 🤖 Model Context Protocol (MCP Server - Claude Desktop & Cursor)
-```bash
-npx -y burkut-mcp
-```
-Detaylı Claude Desktop ve Cursor entegrasyon kılavuzu için [`mcp/README.md`](mcp/README.md) dosyasına bakın.
-
----
-
-## ⚡ 30 Saniyede Hızlı Başlangıç
-
-### 🐍 Python İle Kullanım
 ```python
 from burkut import BurkutClient
 
-# API anahtarınız ile istemciyi başlatın
-# (Veya BURKUT_API_KEY ortam değişkenine atayın)
+# API anahtarınız ile istemciyi başlatın (veya BURKUT_API_KEY ortam değişkenini kullanın)
 client = BurkutClient(api_key="bk_live_...")
 
-# 1. BIST Hisse Senedi Fiyatı & Hacmi
+# 1. BIST Hisse Senedi Verisi (15 Dk Gecikmeli Resmi Akış)
 thyao = client.stocks.get("THYAO")
-print(f"{thyao['name']}: {thyao['price']} TL (Değişim: %{thyao['changePercent']})")
+print(f"{thyao.symbol} - {thyao.name}: {thyao.current_price} TL (Günlük Değişim: %{thyao.daily_change_pct})")
 
 # 2. TEFAS Yatırım Fonu Analizi
-tcd = client.funds.get("TCD")
-print(f"Fon: {tcd['name']} - Fiyat: {tcd['price']} TL")
+mac = client.funds.get("MAC")
+print(f"{mac.name} - 1 Yıllık Getiri: %{mac.yield_1y} | Risk Seviyesi: {mac.risk_level}")
 
-# 3. Döviz & Altın Piyasası
+# 3. Döviz ve Altın Kurları
 usd = client.forex.get("USD")
 altin = client.gold.get("ALTIN")
-print(f"Dolar: {usd['buyRate']} TL | Gram Altın: {altin['price']} TL")
+print(f"USD/TRY: {usd.buy_rate} | Gram Altın: {altin.current_price} TL")
 ```
 
-### ⚡ Node.js / TypeScript İle Kullanım
-```typescript
-import { BurkutClient } from 'burkut';
+### Pandas ile Kantitatif Analiz ve Tarama (Screening)
 
-const client = new BurkutClient({ apiKey: 'bk_live_...' });
-
-async function main() {
-  // BIST Hisseleri (15 Dk Gecikmeli)
-  const stock = await client.stocks.get('GARAN');
-  console.log(`${stock.name}: ${stock.price} TL`);
-
-  // TEFAS Yatırım Fonu
-  const fon = await client.funds.get('AFT');
-  console.log(`Fon Fiyatı: ${fon.price} TL`);
-
-  // Tüm Döviz Kurlarını Listele
-  const allForex = await client.forex.list();
-  console.log(`Takip Edilen Kur Sayısı: ${allForex.length}`);
-}
-
-main();
-```
-
----
-
-## 📊 Algoritmik Ticaret & Pandas Entegrasyonu (Finans Analistleri İçin)
-
-Veri bilimcileri ve algoritmik trade botu geliştirenler için Bürküt SDK, tek satırda **Pandas DataFrame**'e dönüştürülebilir:
+Piyasa verilerini tek satırda Pandas DataFrame'ine dönüştürerek analiz yapın:
 
 ```python
 import pandas as pd
@@ -123,45 +133,75 @@ from burkut import BurkutClient
 
 client = BurkutClient()
 
-# Tüm BIST hisselerini DataFrame'e al
-stocks_df = pd.DataFrame(client.stocks.list())
+# Tüm TEFAS fonlarını tek seferde al
+funds = pd.DataFrame(client.funds.list())
 
-# En çok yükselen ilk 5 BIST hissesi
-top_gainers = stocks_df.sort_values(by="changePercent", ascending=False).head(5)
-print(top_gainers[["symbol", "name", "price", "changePercent"]])
+# 1 yıllık getirisi %60 üzerinde olan hisse senedi fonlarını filtrele
+screened = funds[
+    (funds["fund_type"].str.contains("Hisse", na=False)) & 
+    (funds["yield_1y"] > 60.0)
+].sort_values(by="yield_1y", ascending=False)
+
+print(screened[["symbol", "name", "current_price", "yield_1y", "risk_level"]].head(10))
 ```
 
 ---
 
-## 🤖 Otomasyon & Bot Örneği (Telegram / Discord Fiyat Uyarı Botu)
+## 3. TypeScript / Node.js SDK
 
-Dakikalar içinde hisse ve altın fiyatı gönderen bir Telegram botu yazın:
+### Kurulum
 
-```python
-import time
-from burkut import BurkutClient
+```bash
+npm install burkut
+# veya
+pnpm add burkut
+```
 
-client = BurkutClient()
+### Hızlı Başlangıç
 
-def fiyat_kontrol():
-    thyao = client.stocks.get("THYAO")
-    altin = client.gold.get("ALTIN")
-    
-    mesaj = (
-        f"🚨 PİYASA BİLGİLENDİRMESİ 🚨\n\n"
-        f"✈️ THYAO: {thyao['price']} TL (%{thyao['changePercent']})\n"
-        f"🟡 Gram Altın: {altin['price']} TL"
-    )
-    print(mesaj)
+```typescript
+import { BurkutClient } from 'burkut';
 
-fiyat_kontrol()
+const client = new BurkutClient({ 
+  apiKey: process.env.BURKUT_API_KEY 
+});
+
+async function main() {
+  // Hisse fiyatı sorgulama
+  const stock = await client.stocks.get('ASELS');
+  console.log(`${stock.name}: ${stock.currentPrice} TL`);
+
+  // TEFAS fon listesi
+  const funds = await client.funds.list();
+  console.log(`Takip Edilen Fon Sayısı: ${funds.length}`);
+
+  // Son KAP bildirimleri
+  const news = await client.kap.list({ limit: 5 });
+  news.forEach((n) => console.log(`[${n.symbol}] ${n.title}`));
+}
+
+main();
 ```
 
 ---
 
-## 🛡️ Hata Yönetimi & Dayanıklılık (Error Handling)
+## Karşılaştırma Tablosu
 
-SDK, ağ kopmalarını ve limit aşımlarını otomatik yakalayan tip güvenli istisna sınıflarıyla gelir:
+| Kriter | Bürküt Ekosistemi | yfinance | Geleneksel Scraper'lar | Web Arayüz Kazıma |
+| :--- | :---: | :---: | :---: | :---: |
+| **Model Context Protocol (MCP)** | Yerleşik (`burkut-mcp`) | Yok | Yok | Yok |
+| **TEFAS Fon Verileri** | Eksiksiz REST API | Desteklenmiyor | Kırılgan HTML | IP Ban Riski |
+| **BIST Hisse Senetleri** | 15 Dk Gecikmeli | 15 Dk Gecikmeli | Sürekli Değişen Yapı | Oturum Zorunluluğu |
+| **KAP Bildirimleri** | Yapılandırılmış JSON | Yok | Karmaşık Tablo/PDF | Yok |
+| **Dış Bağımlılık (Dependencies)** | Sıfır Bağımlılık | 10+ Ağır Kütüphane | Selenium / Chromium | Puppeteer / Playwright |
+| **Tip Güvenliği (Type Safety)** | Tam Type Hints / `.d.ts` | Zayıf | Yok | Yok |
+| **Hizmet Sürekliliği** | Bellek Önbelleği & Fail-Safe | Yahoo UI Değişince Patlar | Kaynak Değişince Patlar | Yüksek Bakım Maliyeti |
+
+---
+
+## Hata Yönetimi
+
+SDK istemcileri, ağ ve kota sınırlarını önceden yakalayan açık hata sınıfları içerir:
 
 ```python
 from burkut import (
@@ -169,7 +209,7 @@ from burkut import (
     AuthenticationError,
     RateLimitError,
     QuotaExceededError,
-    NotFoundError
+    NotFoundError,
 )
 
 client = BurkutClient()
@@ -177,84 +217,69 @@ client = BurkutClient()
 try:
     data = client.stocks.get("THYAO")
 except AuthenticationError:
-    print("Geçersiz API Anahtarı! https://burkutportfoy.com/developer adresinden yenisini alın.")
+    print("Geçersiz API Anahtarı! burkutportfoy.com/developer adresinden yenisini alın.")
 except RateLimitError as e:
-    print(f"Dakikalık hız sınırı aşıldı. Lütfen {e.retry_after} saniye sonra tekrar deneyin.")
+    print(f"Dakikalık hız sınırı aşıldı. {e.retry_after} saniye sonra tekrar deneyin.")
 except QuotaExceededError:
-    print("Aylık kota bitti. PRO plana geçiş yapın!")
+    print("Aylık kota tükendi. Geliştirici portalından planınızı yükseltin.")
 except NotFoundError:
-    print("Sembol bulunamadı.")
+    print("Aranan enstrüman bulunamadı.")
 ```
 
 ---
 
-## 📂 Dizin Yapısı
+## Depo Mimarisi
 
 ```text
 burkut-sdks/
+├── assets/               # Marka ve logo görselleri
+│   └── logo.png          # Bürküt kartal vektörel logosu
+│
 ├── mcp/                  # Model Context Protocol Server (npx -y burkut-mcp)
-│   ├── src/              # TypeScript MCP araçları & API istemcisi
-│   ├── dist/             # Derlenmiş stdio JSON-RPC sunucusu
-│   └── README.md         # Claude Desktop & Cursor kurulum rehberi
+│   ├── src/              # TypeScript MCP araçları ve API istemcisi
+│   ├── dist/             # Derlenmiş stdio JSON-RPC dağıtımı
+│   └── README.md         # MCP kurulum ve ajan entegrasyon kılavuzu
 │
 ├── python/               # Python SDK (pip install burkut)
-│   ├── burkut/           # Client, Exception sınıfları ve alt modüller
-│   ├── tests/            # %100 kapsamlı birim testleri
+│   ├── burkut/           # İstemci çekirdeği, modeller ve endpointler
+│   ├── tests/            # Birim testleri
 │   └── pyproject.toml    # Standart PyPI paket konfigürasyonu
 │
 ├── nodejs/               # Node.js & TypeScript SDK (npm install burkut)
 │   ├── src/              # TypeScript kaynak kodları
-│   ├── dist/             # Derlenmiş CJS & ESM modülleri (.d.ts tipleriyle)
-│   ├── test/             # Yerleşik Node.js birim testleri
-│   └── package.json      # Standart npm paket konfigürasyonu
+│   ├── dist/             # CJS & ESM derleme çıktıları (.d.ts)
+│   └── package.json      # NPM paket konfigürasyonu
 │
 └── .github/workflows/    # CI/CD: Çoklu versiyon otomatik test akışı
 ```
 
 ---
 
-## 🔑 Ücretsiz API Anahtarı Nasıl Alınır?
+## Ücretsiz API Anahtarı Nasıl Alınır?
 
-1. [https://burkutportfoy.com/register](https://burkutportfoy.com/register) adresinden ücretsiz hesap oluşturun.
+1. [burkutportfoy.com/register](https://burkutportfoy.com/register) adresinden ücretsiz hesap açın.
 2. E-posta adresinizi doğrulayın.
-3. [Geliştirici Portalı](https://burkutportfoy.com/developer) sayfasından **Yeni Anahtar Oluştur** butonuna tıklayın.
-4. `bk_live_...` formatındaki anahtarınızı kopyalayıp SDK'da kullanın!
+3. [Geliştirici Portalı](https://burkutportfoy.com/developer) üzerinden **Yeni Anahtar Oluştur** butonuna tıklayın.
+4. `bk_live_...` formatındaki anahtarınızı kopyalayıp projelerinizde kullanın.
 
 ---
 
-## 💬 Destek ve İletişim
+## Destek ve İletişim
 
-Geliştirici soruları, entegrasyon desteği, kurumsal kota talepleri veya hata bildirimleri için:
-* **E-posta:** [destek@burkutportfoy.com](mailto:destek@burkutportfoy.com)
-* **GitHub Issues:** [burkut-sdks/issues](https://github.com/sametakan29/burkut-sdks/issues)
-
----
-
-## 🤝 Katkıda Bulunma & Topluluk
-
-1. Bu depoyu Fork'layın (`fork`).
-2. Kendi özelliğinizi geliştirin (`git checkout -b feature/yeni-ozellik`).
-3. Değişikliklerinizi commit'leyin (`git commit -m 'feat: Yeni özellik eklendi'`).
-4. Dalınıza push'layın (`git push origin feature/yeni-ozellik`).
-5. Bir **Pull Request** açın.
-
-## ⚖️ Yasal Uyarı & Feragatname (Disclaimer)
-
-> **Önemli Yasal Bilgilendirme:** Bu kütüphane ve sağlanan API, tamamen **eğitim, kişisel araştırma ve hobi amaçlı** geliştirilmiştir.
-> - **Resmi Veri Sağlayıcısı Değildir:** Bürküt bir borsa aracı kurumu, yatırım kuruluşu veya lisanslı borsa veri dağıtıcısı değildir.
-> - **15 Dakika Gecikmeli Veri:** Borsa İstanbul (BIST) pay piyasası verileri yasal düzenlemeler gereği en az 15 dakika gecikmelidir.
-> - **Yatırım Tavsiyesi Değildir:** Burada veya kütüphane aracılığıyla sunulan veriler hiçbir şekilde yatırım danışmanlığı, al-sat tavsiyesi veya finansal yönlendirme içermez.
-> - **Garanti Taahhüt Edilmez:** Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu, eksiksizliği veya kesintisizliği taahhüt edilmez.
+* **Teknik Destek & Geri Bildirim:** [destek@burkutportfoy.com](mailto:destek@burkutportfoy.com)
+* **Hata Bildirimi (Issues):** [github.com/sametakan29/burkut-sdks/issues](https://github.com/sametakan29/burkut-sdks/issues)
 
 ---
 
-## 📄 Lisans
-Bu proje **MIT Lisansı** ile lisanslanmıştır. Detaylar için [LICENSE](./LICENSE) dosyasına bakabilirsiniz.
+## Yasal Bilgilendirme ve Feragatname
+
+Bu kütüphaneler ve veri servisleri araştırma, kişisel analiz ve yazılım geliştirme amaçlarıyla sunulmaktadır.
+* **Gecikmeli Veri:** Borsa İstanbul (BIST) pay piyasası verileri yasal düzenlemeler uyarınca 15 dakika gecikmelidir.
+* **Yatırım Tavsiyesi Değildir:** Sunulan veriler yatırım danışmanlığı, hisse önerisi veya alım-satım tavsiyesi niteliği taşımaz.
+* **Hizmet Garantisi:** Veriler üçüncü taraf halka açık kaynaklardan derlenmekte olup, kaynak tarafındaki kesintilerde garanti taahhüt edilmez.
 
 ---
 
-<div align="center">
+## Lisans
 
-**[Bürküt Finansal Veri Teknolojileri](https://burkutportfoy.com)** tarafından geliştiriciler için ❤️ ile üretilmiştir.
-
-</div>
+Bu proje [MIT Lisansı](./LICENSE) ile dağıtılmaktadır. Telif Hakkı &copy; 2026 Bürküt Finansal Teknolojiler.

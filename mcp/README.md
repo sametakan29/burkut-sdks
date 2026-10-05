@@ -1,14 +1,25 @@
-# burkut-mcp 🦅
+<p align="center">
+  <img src="../assets/logo.png" alt="Bürküt Logo" width="100" />
+</p>
 
-> **Model Context Protocol (MCP) Server for Turkish Financial Markets (BIST, TEFAS, KAP, IPOs, Macro) powered by Bürküt API.**
+<h1 align="center">Bürküt MCP Server</h1>
 
-`burkut-mcp`, Türkiye finans piyasası verilerini (Borsa İstanbul hisseleri, TEFAS yatırım fonları, KAP bildirimleri, halka arzlar, temettüler ve makroekonomik veriler) doğrudan **Claude Desktop**, **Cursor**, **Windsurf** ve diğer LLM tabanlı yapay zeka ajanlarına bağlayan resmi olmayan/açık kaynak bir MCP sunucusudur.
+<p align="center">
+  <b>Claude Desktop, Cursor ve LLM tabanlı yapay zeka ajanları için Türkiye finans piyasası veri köprüsü.</b><br />
+  Borsa İstanbul (BIST), TEFAS Yatırım Fonları, KAP Bildirimleri, Halka Arzlar, Temettüler ve Makro Veriler.
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/burkut-mcp"><img src="https://img.shields.io/npm/v/burkut-mcp?color=purple&style=flat-square&logo=npm&logoColor=white" alt="npm version" /></a>
+  <a href="https://modelcontextprotocol.io/"><img src="https://img.shields.io/badge/Protokol-MCP%20Standard%C4%B1-blueviolet?style=flat-square&logo=anthropic&logoColor=white" alt="MCP Protocol" /></a>
+  <a href="../LICENSE"><img src="https://img.shields.io/badge/Lisans-MIT-gray.svg?style=flat-square" alt="Lisans" /></a>
+</p>
 
 ---
 
-## ⚡ Hızlı Başlangıç (Quickstart)
+## Hızlı Başlangıç
 
-Kurulum yapmanıza gerek yoktur, `npx` ile anında çalıştırılabilir:
+Herhangi bir kurulum veya indirme gerektirmez. `npx` ile doğrudan çalıştırılır:
 
 ```bash
 npx -y burkut-mcp
@@ -17,10 +28,10 @@ npx -y burkut-mcp
 ### 1. Claude Desktop ile Kullanım
 
 Claude Desktop yapılandırma dosyanızı açın:
-* **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 * **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+* **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 
-Aşağıdaki yapılandırmayı ekleyin:
+Aşağıdaki tanımı ekleyin:
 
 ```json
 {
@@ -29,54 +40,63 @@ Aşağıdaki yapılandırmayı ekleyin:
       "command": "npx",
       "args": ["-y", "burkut-mcp"],
       "env": {
-        "BURKUT_API_KEY": "YOUR_API_KEY_HERE"
+        "BURKUT_API_KEY": "BURKUT_API_ANAHTARINIZ"
       }
     }
   }
 }
 ```
 
-> **Not:** `BURKUT_API_KEY` opsiyoneldir. Anahtar girmeden de temel halka açık modda çalışır. Ancak daha yüksek kota ve kesintisiz erişim için [burkut.com/developers](https://burkut.com/developers) adresinden ücretsiz API Key alabilirsiniz.
+> **Not:** `BURKUT_API_KEY` alanı opsiyoneldir. Anahtar girmeden de temel halka açık modda çalışır. Yüksek istek limitleri için [burkutportfoy.com/developer](https://burkutportfoy.com/developer) adresinden ücretsiz anahtar oluşturabilirsiniz.
 
 ---
 
 ### 2. Cursor IDE ile Kullanım
 
-Cursor Ayarları (`Settings`) -> `Features` -> `MCP Servers` -> `Add New MCP Server`:
-* **Name:** `burkut`
-* **Type:** `command`
-* **Command:** `npx -y burkut-mcp`
+1. **Cursor Settings** &rarr; **Features** &rarr; **MCP Servers** yolunu izleyin.
+2. **Add New MCP Server** butonuna tıklayın:
+   * **Name:** `burkut`
+   * **Type:** `command`
+   * **Command:** `npx -y burkut-mcp`
 
 ---
 
-## 🛠️ Desteklenen Araçlar (MCP Tools)
+## Desteklenen MCP Araçları (Tools)
 
-| Tool | Açıklama |
-| :--- | :--- |
-| `burkut_search_funds` | TEFAS fonlarını koda, isme veya kategoriye göre filtreler; 1 ay, 3 ay, 6 ay ve 1 yıllık getirilerine göre sıralar. |
-| `burkut_get_fund_detail` | Belirli bir fonun (örn: `MAC`, `TI2`, `TCD`) tüm getiri periyotları, risk seviyesi ve güncel fiyat detaylarını çeker. |
-| `burkut_get_stock_quote` | BIST hisselerinin (örn: `THYAO`, `ASELS`, `KCHOL`) anlık/güncel fiyat, değişim % ve hacim verilerini getirir. |
-| `burkut_get_kap_announcements` | Kamuyu Aydınlatma Platformu'na (KAP) düşen şirket bildirimlerini veya genel piyasa bültenini çeker. |
-| `burkut_get_ipo_calendar` | Aktif ve yaklaşan Halka Arz (IPO) takvimini, lot fiyatlarını ve talep toplama tarihlerini listeler. |
-| `burkut_get_dividends` | BIST şirketlerinin temettü geçmişi, hisse başı net ödeme ve temettü verimi oranlarını getirir. |
-| `burkut_get_macro_indicators` | Türkiye resmi enflasyon oranları (TÜFE/ÜFE), serbest piyasa döviz kurları (USD/TRY, EUR/TRY) ve altın fiyatlarını getirir. |
-
----
-
-## 💬 Örnek İstemler (Prompt Örnekleri)
-
-Claude Desktop veya Cursor Composer'da doğrudan şunları sorabilirsiniz:
-
-* *"Bana TEFAS'taki hisse senedi fonları arasında son 1 yılda en yüksek getiri sağlayan ilk 5 fonu listele ve yıllık getirilerini göster."*
-* *"MAC ve TI2 fonlarının risk seviyelerini ve son 6 aylık performanslarını karşılaştır."*
-* *"Bugün KAP'a düşen önemli şirket bildirimlerini özetle."*
-* *"Bu hafta talep toplayacak veya aktif olan halka arzlar hangileri? Fiyatları ve tarihleri nedir?"*
-* *"FROTO ve TUPRS'ın son temettü dağıtım oranlarını karşılaştır."*
-* *"Türkiye'deki son açıklanan yıllık TÜFE enflasyon oranı ile güncel dolar kurunu getir."*
+| Araç Adı | Parametreler | Açıklama |
+| :--- | :--- | :--- |
+| `burkut_search_funds` | `query`, `fundType`, `sortBy`, `limit` | TEFAS fonlarını filtreler; 1 ay, 3 ay, 6 ay ve 1 yıllık getirilerine göre sıralar. |
+| `burkut_get_fund_detail` | `symbol` (örn: `MAC`, `TI2`) | Belirli bir fonun tüm periyot getirilerini, risk seviyesini ve detaylı künyesini döner. |
+| `burkut_get_stock_quote` | `symbol` (örn: `THYAO`, `ASELS`) | BIST hissesinin 15 dk gecikmeli resmi fiyatını, günlük değişim oranını ve hacmini getirir. |
+| `burkut_get_kap_announcements` | `symbol`, `limit` | Kamuyu Aydınlatma Platformu'na (KAP) düşen şirket bildirimlerini ve haberleri çeker. |
+| `burkut_get_ipo_calendar` | `activeOnly` | Aktif ve yaklaşan Halka Arz takvimini, dağıtım yöntemlerini ve lot fiyatlarını listeler. |
+| `burkut_get_dividends` | `symbol` | Şirketlerin temettü geçmişini, hisse başı net nakit ödemelerini ve temettü verimlerini döner. |
+| `burkut_get_macro_indicators` | `category` (`inflation`, `forex`, `gold`, `all`) | Resmi TÜFE/ÜFE enflasyon oranlarını, serbest piyasa döviz kurlarını ve altın fiyatlarını getirir. |
 
 ---
 
-## 🔧 Geliştirme (Local Development)
+## Örnek Türkçe İstekler (Promptlar)
+
+Claude Desktop veya Cursor'a doğrudan şu soruları sorabilirsiniz:
+
+* *"Bana TEFAS'taki hisse senedi yoğun fonlar arasında son 1 yılda en çok kazandıran 5 fonu listele ve yıllık getirilerini göster."*
+* *"MAC ve TI2 fonlarının risk puanlarını ve son 6 aylık performanslarını karşılaştır."*
+* *"Bugün KAP'a düşen önemli şirket bildirimlerini ve yeni iş ilişkilerini özetle."*
+* *"Bu hafta talep toplayacak veya aktif olan halka arzlar hangileri? Dağıtım yöntemleri nedir?"*
+* *"FROTO ve TUPRS şirketlerinin son temettü dağıtım oranlarını karşılaştır."*
+* *"TÜİK tarafından açıklanan son yıllık TÜFE enflasyon oranı ile güncel dolar kurunu getir."*
+
+---
+
+## Ortam Değişkenleri (Environment Variables)
+
+* `BURKUT_API_KEY`: Geliştirici API Anahtarınız (opsiyonel).
+* `BURKUT_API_BASE_URL`: Hedef API adresi (Varsayılan: `https://api.burkutportfoy.com`).
+* `BURKUT_TIMEOUT_MS`: İstek zaman aşımı süresi milisaniye cinsinden (Varsayılan: `15000`).
+
+---
+
+## Yerel Geliştirme (Local Development)
 
 ```bash
 git clone https://github.com/sametakan29/burkut-sdks.git
@@ -85,26 +105,20 @@ npm install
 npm run build
 ```
 
-Yerel test için:
+Yerel test:
 ```bash
 node dist/index.js
 ```
 
-Ortam Değişkenleri:
-* `BURKUT_API_KEY`: Bürküt Developer API anahtarınız (opsiyonel).
-* `BURKUT_API_BASE_URL`: Hedef API adresi (Varsayılan: `https://api.burkutportfoy.com`).
-* `BURKUT_TIMEOUT_MS`: İstek zaman aşımı süresi (Varsayılan: `15000` ms).
-
 ---
 
-## 💬 Destek ve İletişim
+## Destek ve İletişim
 
-Her türlü geri bildirim, özel veri seti talepleri veya hata bildirimleri için:
 * **E-posta:** [destek@burkutportfoy.com](mailto:destek@burkutportfoy.com)
-* **GitHub Issues:** [burkut-sdks/issues](https://github.com/sametakan29/burkut-sdks/issues)
+* **GitHub Issues:** [github.com/sametakan29/burkut-sdks/issues](https://github.com/sametakan29/burkut-sdks/issues)
 
 ---
 
-## 📄 Lisans
+## Lisans
 
-MIT © [Bürküt](https://burkutportfoy.com)
+Bu proje [MIT Lisansı](../LICENSE) ile korunmaktadır. Telif Hakkı &copy; 2026 Bürküt Finansal Teknolojiler.
