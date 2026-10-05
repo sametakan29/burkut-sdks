@@ -11,6 +11,13 @@ export interface ToolDefinition {
   handler: (client: BurkutApiClient, args: any) => Promise<string>;
 }
 
+function unwrap(res: any): any {
+  if (res && typeof res === 'object' && 'data' in res) {
+    return res.data;
+  }
+  return res;
+}
+
 export const TOOLS: ToolDefinition[] = [
   {
     name: 'burkut_search_funds',
@@ -40,16 +47,18 @@ export const TOOLS: ToolDefinition[] = [
     handler: async (client, args) => {
       const raw = await client.getFunds();
       let list: any[] = [];
-      if (Array.isArray(raw)) {
-        list = raw;
-      } else if (raw && Array.isArray((raw as any).items)) {
-        list = (raw as any).items;
+      const payload = unwrap(raw);
+      if (Array.isArray(payload)) {
+        list = payload;
+      } else if (payload && Array.isArray((payload as any).items)) {
+        list = (payload as any).items;
       }
 
       if (args.query) {
         const q = String(args.query).toLowerCase().trim();
         list = list.filter((f) =>
           (f.symbol && f.symbol.toLowerCase().includes(q)) ||
+          (f.code && f.code.toLowerCase().includes(q)) ||
           (f.name && f.name.toLowerCase().includes(q)) ||
           (f.fundType && f.fundType.toLowerCase().includes(q))
         );
@@ -69,11 +78,11 @@ export const TOOLS: ToolDefinition[] = [
 
       const limit = Math.min(Math.max(Number(args.limit) || 15, 1), 50);
       const results = list.slice(0, limit).map((f) => ({
-        kod: f.symbol,
+        kod: f.symbol || f.code,
         isim: f.name,
         tur: f.fundType || f.type,
-        fiyat: f.currentPrice,
-        gunlukDegisimPct: f.dailyChangePct,
+        fiyat: f.currentPrice ?? f.price,
+        gunlukDegisimPct: f.dailyChangePct ?? f.dailyChangePercent,
         getiri1Ay: f.yield1m != null ? `%${f.yield1m}` : 'N/A',
         getiri3Ay: f.yield3m != null ? `%${f.yield3m}` : 'N/A',
         getiri6Ay: f.yield6m != null ? `%${f.yield6m}` : 'N/A',
@@ -104,7 +113,7 @@ export const TOOLS: ToolDefinition[] = [
     },
     handler: async (client, args) => {
       const fund = await client.getFundDetail(args.symbol);
-      return JSON.stringify(fund, null, 2);
+      return JSON.stringify(unwrap(fund), null, 2);
     },
   },
 
@@ -123,7 +132,7 @@ export const TOOLS: ToolDefinition[] = [
     },
     handler: async (client, args) => {
       const quote = await client.getStockQuote(args.symbol);
-      return JSON.stringify(quote, null, 2);
+      return JSON.stringify(unwrap(quote), null, 2);
     },
   },
 
@@ -144,7 +153,7 @@ export const TOOLS: ToolDefinition[] = [
         ? String(args.symbols).split(',').map((s) => s.trim()).filter(Boolean)
         : undefined;
       const stocks = await client.getStocks(symList);
-      return JSON.stringify(stocks, null, 2);
+      return JSON.stringify(unwrap(stocks), null, 2);
     },
   },
 
@@ -163,10 +172,10 @@ export const TOOLS: ToolDefinition[] = [
     handler: async (client, args) => {
       if (args.symbol) {
         const item = await client.getForexDetail(args.symbol);
-        return JSON.stringify(item, null, 2);
+        return JSON.stringify(unwrap(item), null, 2);
       }
       const data = await client.getForex();
-      return JSON.stringify(data, null, 2);
+      return JSON.stringify(unwrap(data), null, 2);
     },
   },
 
@@ -185,10 +194,10 @@ export const TOOLS: ToolDefinition[] = [
     handler: async (client, args) => {
       if (args.symbol) {
         const item = await client.getGoldDetail(args.symbol);
-        return JSON.stringify(item, null, 2);
+        return JSON.stringify(unwrap(item), null, 2);
       }
       const data = await client.getGold();
-      return JSON.stringify(data, null, 2);
+      return JSON.stringify(unwrap(data), null, 2);
     },
   },
 
@@ -201,7 +210,7 @@ export const TOOLS: ToolDefinition[] = [
     },
     handler: async (client) => {
       const data = await client.getBonds();
-      return JSON.stringify(data, null, 2);
+      return JSON.stringify(unwrap(data), null, 2);
     },
   },
 
@@ -214,7 +223,7 @@ export const TOOLS: ToolDefinition[] = [
     },
     handler: async (client) => {
       const data = await client.getViop();
-      return JSON.stringify(data, null, 2);
+      return JSON.stringify(unwrap(data), null, 2);
     },
   },
 ];
