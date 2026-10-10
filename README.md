@@ -266,6 +266,30 @@ burkut-sdks/
 
 ---
 
+## Veri Sözlüğü & Sıkça Sorulan Sorular (FAQ)
+
+Algoritmik işlem, teknik analiz ve veri saklama modelleri geliştiren geliştiriciler için önemli teknik açıklamalar:
+
+### 1. Geçmiş fiyatlar ham mı, düzeltilmiş mi? (Splits & Dividends)
+* **Bölünme & Bedelsiz:** `history` servisindeki OHLC fiyatları **hisse bölünmelerine ve bedelsiz sermaye artırımlarına karşı geriye dönük düzeltilmiştir (split-adjusted)**. Böylece grafiklerinizde ve teknik göstergelerinizde (SMA, RSI vb.) suni fiyat uçurumları oluşmaz.
+* **Temettü:** Nakit temettü düzeltmesi uygulanmamaktadır; fiyatlar bölünme düzeltmeli brüt piyasa kapanışlarıdır.
+
+### 2. Hacim (Volume) alanlarının birimi nedir?
+* **Anlık Liste (`/stocks`):** Borsa İstanbul anlık seans özetinden gelir ve **TL cinsinden toplam işlem tutarıdır (TRY Turnover)**.
+* **Geçmiş OHLCV (`/history`):** Uluslararası standartlara uygun olarak **günlük el değiştiren pay adedidir (Lot / Share Volume)**.
+* **Toplu Gün Sonu (`/stocks/eod/latest`):** Günlük kümülatif pay işlem adedini (Lot) temsil eder.
+
+### 3. Günlük bar hangi saat dilimindedir ve ne zaman kesinleşir?
+* `timestamp` değeri UTC Unix Epoch saniyesidir (07:00 UTC / 10:00 TSİ).
+* Seans saatleri içinde (10:00 – 18:10 TSİ) bugünün barı dinamiktir ve anlık son fiyatı `close` olarak yansıtır.
+* BIST kapanış seansı tamamlandıktan sonra, resmi kesinleşmiş gün sonu barı **18:15 – 18:30 (TSİ)** arasında sisteme işlenir.
+
+### 4. Toplu Gün Sonu Servisi (`/stocks/eod/latest`)
+* Tek bir GET isteğinde tüm BIST hisselerinin (560+ pay) tamamlanmış gün sonu OHLCV verisini döner.
+* **Kotadan sadece 1 istek (1 kredi) düşer.** 560 hisseyi tek tek çekip kotanızı tüketmek yerine günde 1 istekle tüm piyasayı yerel veritabanınıza senkronize edebilirsiniz.
+
+---
+
 ## Destek ve İletişim
 
 * **Teknik Destek & Geri Bildirim:** [destek@burkutportfoy.com](mailto:destek@burkutportfoy.com)
