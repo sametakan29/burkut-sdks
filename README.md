@@ -112,16 +112,28 @@ client = BurkutClient(api_key="bk_live_...")
 
 # 1. BIST Hisse Senedi Verisi (15 Dk Gecikmeli Resmi Akış)
 thyao = client.stocks.get("THYAO")
-print(f"{thyao.symbol} - {thyao.name}: {thyao.current_price} TL (Günlük Değişim: %{thyao.daily_change_pct})")
+print(f"{thyao['symbol']}: {thyao['last_price']} TL")
 
-# 2. TEFAS Yatırım Fonu Analizi
+# 2. Bölünme Düzeltmeli Geçmiş OHLCV Verisi (250 Güne Kadar)
+history = client.stocks.get_history("THYAO", days=250)
+print(f"Alınan Bar Sayısı: {history['count']}")
+
+# 3. Tek İstekle Tüm BIST Gün Sonu Kapanışları (Kotadan 1 Kredi Düşer)
+eod = client.stocks.get_eod(date="2026-10-09")  # İsteğe bağlı geçmiş tarih veya boş bırakılarak son seans
+print(f"{eod['date']} Kapanışında {eod['count']} Hisse")
+
+# 4. Kamuyu Aydınlatma Platformu (KAP) Bildirimleri
+kap_haberleri = client.kap.list(symbol="THYAO", size=5)
+print(f"Son KAP Bildirimi: {kap_haberleri['items'][0]['title']}")
+
+# 5. TEFAS Yatırım Fonu Analizi
 mac = client.funds.get("MAC")
-print(f"{mac.name} - 1 Yıllık Getiri: %{mac.yield_1y} | Risk Seviyesi: {mac.risk_level}")
+print(f"{mac['name']} - 1 Yıllık Getiri: %{mac.get('yield_1y')} | Risk: {mac.get('risk_level')}")
 
-# 3. Döviz ve Altın Kurları
+# 6. Döviz ve Altın Kurları
 usd = client.forex.get("USD")
 altin = client.gold.get("ALTIN")
-print(f"USD/TRY: {usd.buy_rate} | Gram Altın: {altin.current_price} TL")
+print(f"USD/TRY: {usd['buying']} | Gram Altın: {altin['buying']} TL")
 ```
 
 ### Pandas ile Kantitatif Analiz ve Tarama (Screening)
@@ -139,11 +151,12 @@ funds = pd.DataFrame(client.funds.list())
 
 # 1 yıllık getirisi %60 üzerinde olan hisse senedi fonlarını filtrele
 screened = funds[
-    (funds["fund_type"].str.contains("Hisse", na=False)) & 
+    (funds["category"].str.contains("Hisse", na=False)) & 
     (funds["yield_1y"] > 60.0)
 ].sort_values(by="yield_1y", ascending=False)
 
-print(screened[["symbol", "name", "current_price", "yield_1y", "risk_level"]].head(10))
+print(screened[["symbol", "name", "price", "yield_1y"]].head(10))
+
 ```
 
 ---
@@ -168,19 +181,32 @@ const client = new BurkutClient({
 });
 
 async function main() {
-  // Hisse fiyatı sorgulama
+  // 1. Hisse anlık fiyatı
   const stock = await client.stocks.get('ASELS');
-  console.log(`${stock.name}: ${stock.currentPrice} TL`);
+  console.log(`${stock.symbol}: ${stock.last_price} TL`);
 
-  // TEFAS fon listesi
+  // 2. Geçmiş OHLCV bar verisi (bölünme düzeltmeli)
+  const history = await client.stocks.getHistory('ASELS', { days: 250 });
+  console.log(`Son 250 Günlük Mum Sayısı: ${history.count}`);
+
+  // 3. Tek istekle tüm BIST hisselerinin gün sonu kapanışı (1 Kredi)
+  const eod = await client.stocks.getEod('2026-10-09');
+  console.log(`${eod.date} Kapanışı: ${eod.count} hisse`);
+
+  // 4. Son KAP bildirimleri
+  const kap = await client.kap.list({ symbol: 'ASELS', size: 5 });
+  console.log(`Son KAP Bildirimi: ${kap.items[0]?.title}`);
+
+  // 5. TEFAS fon listesi
   const funds = await client.funds.list();
   console.log(`Takip Edilen Fon Sayısı: ${funds.length}`);
 
-  // Döviz ve altın kurları
+  // 6. Döviz ve altın kurları
   const usd = await client.forex.get('USD');
   const gold = await client.gold.get('ALTIN');
-  console.log(`Dolar: ${usd.buyRate} TL | Gram Altın: ${gold.price} TL`);
+  console.log(`Dolar: ${usd.buying} TL | Gram Altın: ${gold.buying} TL`);
 }
+
 
 main();
 ```
@@ -275,18 +301,20 @@ Algoritmik işlem, teknik analiz ve veri saklama modelleri geliştiren geliştir
 * **Temettü:** Nakit temettü düzeltmesi uygulanmamaktadır; fiyatlar bölünme düzeltmeli brüt piyasa kapanışlarıdır.
 
 ### 2. Hacim (Volume) alanlarının birimi nedir?
-* **Anlık Liste (`/stocks`):** Borsa İstanbul anlık seans özetinden gelir ve **TL cinsinden toplam işlem tutarıdır (TRY Turnover)**.
+* **Anlık Snapshot (`/stocks`):** Borsa İstanbul anlık seans özetinden gelir ve **TL cinsinden toplam işlem tutarıdır (TRY Turnover)**.
 * **Geçmiş OHLCV (`/history`):** Uluslararası standartlara uygun olarak **günlük el değiştiren pay adedidir (Lot / Share Volume)**.
-* **Toplu Gün Sonu (`/stocks/eod/latest`):** Günlük kümülatif pay işlem adedini (Lot) temsil eder.
+* **Toplu Gün Sonu (`/stocks/eod`):** Borsa bültenindeki resmi pay işlem tutarını TL cinsinden (`TRY`) temsil eder. Yanıttaki `volume_unit` alanı bunu teyit eder.
 
 ### 3. Günlük bar hangi saat dilimindedir ve ne zaman kesinleşir?
-* `timestamp` değeri UTC Unix Epoch saniyesidir (07:00 UTC / 10:00 TSİ).
+* `timestamp` değeri UTC Unix Epoch saniyesidir (07:00 UTC / 10:00 TSİ referans alınır).
 * Seans saatleri içinde (10:00 – 18:10 TSİ) bugünün barı dinamiktir ve anlık son fiyatı `close` olarak yansıtır.
 * BIST kapanış seansı tamamlandıktan sonra, resmi kesinleşmiş gün sonu barı **18:15 – 18:30 (TSİ)** arasında sisteme işlenir.
 
-### 4. Toplu Gün Sonu Servisi (`/stocks/eod/latest`)
-* Tek bir GET isteğinde tüm BIST hisselerinin (560+ pay) tamamlanmış gün sonu OHLCV verisini döner.
+### 4. Toplu Gün Sonu Servisi (`/stocks/eod` ve `?date=YYYY-MM-DD`)
+* Tek bir GET isteğinde tüm BIST paylarının (560+ hisse) tamamlanmış gün sonu OHLCV verisini döner.
+* İsteğe bağlı `?date=YYYY-MM-DD` parametresiyle kaçırılan geçmiş günlerin veya tatil öncesi seansların verisi topluca çekilebilir.
 * **Kotadan sadece 1 istek (1 kredi) düşer.** 560 hisseyi tek tek çekip kotanızı tüketmek yerine günde 1 istekle tüm piyasayı yerel veritabanınıza senkronize edebilirsiniz.
+
 
 ---
 

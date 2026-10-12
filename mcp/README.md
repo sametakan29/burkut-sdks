@@ -69,11 +69,15 @@ Aşağıdaki tanımı ekleyin:
 | `burkut_search_funds` | `query`, `fundType`, `sortBy`, `limit` | TEFAS fonlarını filtreler; 1 ay, 3 ay, 6 ay ve 1 yıllık getirilerine göre sıralar. |
 | `burkut_get_fund_detail` | `symbol` (örn: `MAC`, `TI2`) | Belirli bir fonun tüm periyot getirilerini, risk seviyesini ve detaylı künyesini döner. |
 | `burkut_get_stock_quote` | `symbol` (örn: `THYAO`, `ASELS`) | BIST hissesinin 15 dk gecikmeli resmi fiyatını, günlük değişim oranını ve hacmini getirir. |
+| `burkut_get_stock_history` | `symbol`, `days` (örn: 250) | BIST hissesinin bölünme düzeltmeli geçmiş OHLCV bar serisini getirir. |
+| `burkut_get_stock_eod` | `date` (örn: `2026-10-09`) | Tüm BIST hisselerinin (560+ hisse) toplu gün sonu OHLCV verilerini tek seferde çeker (1 Kredi). |
+| `burkut_get_kap_notifications` | `symbol`, `limit` | Kamuyu Aydınlatma Platformu (KAP) son şirket bildirimlerini listeler. |
 | `burkut_list_stocks` | `symbols` (örn: `THYAO,ASELS`) | BIST hisselerini listeler veya virgülle ayrılmış hisseleri toplu çeker. |
 | `burkut_get_forex` | `symbol` (örn: `USD`, `EUR`) | Serbest piyasa ve TCMB döviz kurlarını getirir. |
 | `burkut_get_gold` | `symbol` (örn: `ALTIN`, `CEYREK_ALTIN`) | Gram altın, çeyrek altın ve ons altın piyasa fiyatlarını döner. |
 | `burkut_get_bonds` | - | Devlet tahvilleri ve hazine bonosu getirilerini listeler. |
 | `burkut_get_viop` | - | VİOP vadeli işlem ve opsiyon kontrat fiyatlarını listeler. |
+
 
 ---
 

@@ -12,6 +12,7 @@ import { BondsResource } from './resources/bonds';
 import { ForexResource } from './resources/forex';
 import { FundsResource } from './resources/funds';
 import { GoldResource } from './resources/gold';
+import { KAPResource } from './resources/kap';
 import { StocksResource } from './resources/stocks';
 import { ViopResource } from './resources/viop';
 import type { BurkutClientOptions } from './types';
@@ -33,6 +34,7 @@ export class BurkutClient {
   public readonly funds: FundsResource;
   public readonly bonds: BondsResource;
   public readonly viop: ViopResource;
+  public readonly kap: KAPResource;
 
   constructor(options: BurkutClientOptions = {}) {
     const resolvedKey = options.apiKey || (typeof process !== 'undefined' ? process.env?.BURKUT_API_KEY : undefined);
@@ -52,7 +54,9 @@ export class BurkutClient {
     this.funds = new FundsResource(this);
     this.bonds = new BondsResource(this);
     this.viop = new ViopResource(this);
+    this.kap = new KAPResource(this);
   }
+
 
   /**
    * Bürküt API'ye yetkilendirilmiş istek gönderir.

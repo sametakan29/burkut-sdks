@@ -63,6 +63,80 @@ export interface ViopItem {
   time?: string;
 }
 
+export interface HistoryPoint {
+  timestamp: number;
+  date: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+}
+
+export interface StockHistoryResponse {
+  symbol: string;
+  currency: string;
+  range: string;
+  interval: string;
+  count: number;
+  points: HistoryPoint[];
+}
+
+export interface StockHistoryOptions {
+  days?: number;
+  range?: string;
+  interval?: string;
+  currency?: string;
+}
+
+export interface EODStockRecord {
+  symbol: string;
+  name?: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+  volume_unit?: string;
+  change_rate?: number;
+}
+
+export interface StockEODResponse {
+  date: string;
+  timestamp: number;
+  count: number;
+  stocks: EODStockRecord[];
+}
+
+export interface DividendItem {
+  symbol: string;
+  company_name?: string;
+  gross_dividend: number;
+  net_dividend: number;
+  dividend_yield: number;
+  record_date?: string | null;
+  payment_date?: string | null;
+  year?: number;
+}
+
+export interface KAPNotificationItem {
+  id: string;
+  title: string;
+  summary?: string;
+  symbol?: string;
+  company_title?: string;
+  publish_date: string;
+  disclosure_type?: string;
+  url?: string;
+}
+
+export interface KAPListResponse {
+  total: number;
+  page: number;
+  size: number;
+  items: KAPNotificationItem[];
+}
+
 export interface BurkutClientOptions {
   /**
    * Bürküt API Anahtarı ('bk_live_...' veya 'bk_test_...').
@@ -71,7 +145,7 @@ export interface BurkutClientOptions {
   apiKey?: string;
 
   /**
-   * API taban URL adresi (Varsayılan: 'https://burkutportfoy.com/api/public/v1').
+   * API taban URL adresi (Varsayılan: 'https://api.burkutportfoy.com/api/public/v1').
    */
   baseUrl?: string;
 
@@ -80,3 +154,4 @@ export interface BurkutClientOptions {
    */
   timeoutMs?: number;
 }
+

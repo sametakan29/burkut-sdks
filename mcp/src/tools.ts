@@ -158,6 +158,70 @@ export const TOOLS: ToolDefinition[] = [
   },
 
   {
+    name: 'burkut_get_stock_history',
+    description: 'Borsa İstanbul (BIST) hisse senedinin bölünme düzeltmeli geçmiş OHLCV günlük bar serisini getirir (250 güne kadar). Teknik analiz ve geriye dönük testler için kullanılır.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        symbol: {
+          type: 'string',
+          description: 'Hisse sembolü (örn: "THYAO", "GARAN", "TUPRS").',
+        },
+        days: {
+          type: 'number',
+          description: 'İstenen geçmiş işlem günü sayısı (örn: 30, 90, 250). Varsayılan: 250.',
+        },
+      },
+      required: ['symbol'],
+    },
+    handler: async (client, args) => {
+      const history = await client.getStockHistory(args.symbol, { days: args.days ? Number(args.days) : 250 });
+      return JSON.stringify(unwrap(history), null, 2);
+    },
+  },
+
+  {
+    name: 'burkut_get_stock_eod',
+    description: 'Tüm Borsa İstanbul (BIST) hisselerinin (560+ hisse) toplu gün sonu kapanış, OHLC ve hacim verilerini tek seferde getirir.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        date: {
+          type: 'string',
+          description: 'İsteğe bağlı geçmiş tarih (YYYY-MM-DD formatında, örn: "2026-10-09"). Belirtilmezse son kapanmış seans verisi döner.',
+        },
+      },
+    },
+    handler: async (client, args) => {
+      const eod = await client.getStockEod(args.date);
+      return JSON.stringify(unwrap(eod), null, 2);
+    },
+  },
+
+  {
+    name: 'burkut_get_kap_notifications',
+    description: 'Kamuyu Aydınlatma Platformu (KAP) son şirket bildirimlerini, özel durum açıklamalarını ve haberleri listeler.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        symbol: {
+          type: 'string',
+          description: 'İsteğe bağlı şirket borsa kodu filtresi (örn: "THYAO", "ASELS", "KCHOL").',
+        },
+        limit: {
+          type: 'number',
+          description: 'Döndürülecek maksimum bildirim sayısı (varsayılan: 20).',
+        },
+      },
+    },
+    handler: async (client, args) => {
+      const kap = await client.getKAP({ symbol: args.symbol, size: args.limit ? Number(args.limit) : 20 });
+      return JSON.stringify(unwrap(kap), null, 2);
+    },
+  },
+
+
+  {
     name: 'burkut_get_forex',
     description: 'Serbest piyasa ve TCMB döviz kurlarını (USD/TRY, EUR/TRY, GBP/TRY vb.) getirir.',
     inputSchema: {

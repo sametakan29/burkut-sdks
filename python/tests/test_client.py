@@ -157,6 +157,51 @@ class TestBurkutClient(unittest.TestCase):
         with self.assertRaises(ServerError):
             client.funds.list()
 
+    @patch("urllib.request.urlopen")
+    def test_stocks_history_and_eod(self, mock_urlopen):
+        mock_resp = MagicMock()
+        mock_resp.status = 200
+        mock_resp.read.return_value = json.dumps({
+            "data": {"symbol": "THYAO", "count": 1, "points": [{"timestamp": 1700000000, "close": 280}]}
+        }).encode("utf-8")
+        mock_resp.__enter__.return_value = mock_resp
+        mock_urlopen.return_value = mock_resp
+
+        client = BurkutClient(api_key="bk_live_test")
+        res = client.stocks.get_history("THYAO", days=250)
+        self.assertEqual(res["symbol"], "THYAO")
+        req = mock_urlopen.call_args[0][0]
+        self.assertIn("/stocks/THYAO/history", req.full_url)
+        self.assertIn("days=250", req.full_url)
+
+        # Test EOD
+        client.stocks.get_eod(date="2026-10-09")
+        req2 = mock_urlopen.call_args[0][0]
+        self.assertIn("/stocks/eod", req2.full_url)
+        self.assertIn("date=2026-10-09", req2.full_url)
+
+    @patch("urllib.request.urlopen")
+    def test_kap_methods(self, mock_urlopen):
+        mock_resp = MagicMock()
+        mock_resp.status = 200
+        mock_resp.read.return_value = json.dumps({
+            "data": {"total": 1, "page": 0, "size": 20, "items": [{"id": "1", "title": "Test KAP"}]}
+        }).encode("utf-8")
+        mock_resp.__enter__.return_value = mock_resp
+        mock_urlopen.return_value = mock_resp
+
+        client = BurkutClient(api_key="bk_live_test")
+        res = client.kap.list(symbol="THYAO", page=1)
+        self.assertEqual(res["total"], 1)
+        req = mock_urlopen.call_args[0][0]
+        self.assertIn("/kap", req.full_url)
+        self.assertIn("symbol=THYAO", req.full_url)
+
+        client.kap.get_by_symbol("GARAN")
+        req2 = mock_urlopen.call_args[0][0]
+        self.assertIn("/kap/GARAN", req2.full_url)
+
 
 if __name__ == "__main__":
     unittest.main()
+

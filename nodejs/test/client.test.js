@@ -138,3 +138,57 @@ test('Handles 429 QuotaExceededError properly', async () => {
     globalThis.fetch = originalFetch;
   }
 });
+
+test('StocksResource getHistory and getEod build correct endpoints', async () => {
+  const originalFetch = globalThis.fetch;
+  const calls = [];
+
+  globalThis.fetch = async (url) => {
+    calls.push(String(url));
+    if (String(url).includes('/history')) {
+      return new Response(JSON.stringify({
+        data: { symbol: 'THYAO', count: 1, points: [{ timestamp: 1700000000, close: 280 }] }
+      }), { status: 200 });
+    }
+    return new Response(JSON.stringify({
+      data: { date: '2026-10-09', count: 563, stocks: [] }
+    }), { status: 200 });
+  };
+
+  try {
+    const client = new BurkutClient({ apiKey: 'bk_live_test' });
+    const hist = await client.stocks.getHistory('thyao', { days: 250 });
+    assert.strictEqual(hist.symbol, 'THYAO');
+    assert.ok(calls[0].includes('/stocks/THYAO/history?days=250'));
+
+    const eod = await client.stocks.getEod('2026-10-09');
+    assert.strictEqual(eod.date, '2026-10-09');
+    assert.ok(calls[1].includes('/stocks/eod?date=2026-10-09'));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('KAPResource list and getBySymbol build correct endpoints', async () => {
+  const originalFetch = globalThis.fetch;
+  const calls = [];
+
+  globalThis.fetch = async (url) => {
+    calls.push(String(url));
+    return new Response(JSON.stringify({
+      data: { total: 10, page: 0, size: 20, items: [] }
+    }), { status: 200 });
+  };
+
+  try {
+    const client = new BurkutClient({ apiKey: 'bk_live_test' });
+    await client.kap.list({ symbol: 'THYAO', page: 1 });
+    assert.ok(calls[0].includes('/kap?symbol=THYAO&page=1'));
+
+    await client.kap.getBySymbol('GARAN', { size: 5 });
+    assert.ok(calls[1].includes('/kap/GARAN?size=5'));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+

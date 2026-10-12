@@ -106,7 +106,27 @@ export class BurkutApiClient {
     return this.request(`/stocks/${sym}`);
   }
 
+  async getStockHistory(symbol: string, options?: { days?: number; range?: string; interval?: string }): Promise<any> {
+    const sym = normalizeSymbol(symbol);
+    return this.request(`/stocks/${sym}/history`, { query: options });
+  }
+
+  async getStockEod(date?: string): Promise<any> {
+    const query = date ? { date: date.trim() } : undefined;
+    return this.request('/stocks/eod', { query });
+  }
+
+  // --- KAP ---
+  async getKAP(options?: { symbol?: string; page?: number; size?: number }): Promise<any> {
+    const query: Record<string, any> = {};
+    if (options?.symbol) query.symbol = normalizeSymbol(options.symbol);
+    if (options?.page !== undefined) query.page = options.page;
+    if (options?.size !== undefined) query.size = options.size;
+    return this.request('/kap', { query });
+  }
+
   // --- Forex ---
+
   async getForex(): Promise<any[]> {
     return this.request('/forex');
   }

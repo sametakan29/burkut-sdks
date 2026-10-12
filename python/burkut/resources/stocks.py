@@ -38,3 +38,54 @@ class StocksResource(BaseResource):
         if not symbol or not isinstance(symbol, str):
             raise ValueError("symbol parametresi boş olamaz.")
         return self._get(f"/stocks/{symbol.strip().upper()}")
+
+    def get_history(
+        self,
+        symbol: str,
+        days: Optional[int] = None,
+        range_: Optional[str] = None,
+        interval: Optional[str] = None,
+        currency: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Hisse senedinin geçmiş OHLCV verilerini getirir (bölünme düzeltmeli).
+
+        Args:
+            symbol: Hisse senedi sembol kodu (Örn: 'THYAO')
+            days: Son kaç işlem gününün getirileceği (Örn: 250)
+            range_: Periyot aralığı ('1mo', '3mo', '6mo', '1y', '2y', '5y', 'max')
+            interval: Bar aralığı ('1d', '1wk', '1mo')
+            currency: Para birimi (Varsayılan: 'TRY')
+
+        Returns:
+            Geçmiş OHLCV bar serisi ve meta veriler.
+        """
+        if not symbol or not isinstance(symbol, str):
+            raise ValueError("symbol parametresi boş olamaz.")
+        params: Dict[str, Any] = {}
+        if days is not None:
+            params["days"] = days
+        if range_ is not None:
+            params["range"] = range_
+        if interval is not None:
+            params["interval"] = interval
+        if currency is not None:
+            params["currency"] = currency
+        return self._get(f"/stocks/{symbol.strip().upper()}/history", params=params if params else None)
+
+    def get_eod(self, date: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Tüm BIST hisselerinin toplu gün sonu (EOD) OHLCV verilerini döner.
+        Tek bir istekle 560+ hisse çekilir ve kotanızdan yalnız 1 kredi düşer.
+
+        Args:
+            date: İsteğe bağlı geçmiş tarih ('YYYY-MM-DD'). Belirtilmezse en son tamamlanan seans verisi döner.
+
+        Returns:
+            Tüm BIST hisselerinin gün sonu kapanış, OHLC ve hacim listesi.
+        """
+        params: Dict[str, Any] = {}
+        if date and isinstance(date, str) and date.strip():
+            params["date"] = date.strip()
+        return self._get("/stocks/eod", params=params if params else None)
+
