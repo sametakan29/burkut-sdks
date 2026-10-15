@@ -201,6 +201,51 @@ class TestBurkutClient(unittest.TestCase):
         req2 = mock_urlopen.call_args[0][0]
         self.assertIn("/kap/GARAN", req2.full_url)
 
+    @patch("urllib.request.urlopen")
+    def test_indicators_methods(self, mock_urlopen):
+        mock_resp = MagicMock()
+        mock_resp.status = 200
+        mock_resp.read.return_value = json.dumps({
+            "data": {
+                "symbol": "THYAO",
+                "last_close": 310.5,
+                "rsi": {"symbol": "THYAO", "rsi": 55.4, "signal": "Nötr"},
+                "macd": {"symbol": "THYAO", "macd": 2.1, "trend": "Boğa"},
+                "bollinger": {"symbol": "THYAO", "upper": 320.0, "middle": 305.0, "lower": 290.0}
+            }
+        }).encode("utf-8")
+        mock_resp.__enter__.return_value = mock_resp
+        mock_urlopen.return_value = mock_resp
+
+        client = BurkutClient(api_key="bk_live_test")
+
+        # Summary
+        res = client.indicators.get_summary("thyao")
+        self.assertEqual(res["symbol"], "THYAO")
+        req = mock_urlopen.call_args[0][0]
+        self.assertIn("/indicators/THYAO", req.full_url)
+
+        # RSI
+        client.indicators.get_rsi("thyao", period=14)
+        req = mock_urlopen.call_args[0][0]
+        self.assertIn("/indicators/THYAO/rsi", req.full_url)
+        self.assertIn("period=14", req.full_url)
+
+        # MACD
+        client.indicators.get_macd("thyao", fast=12, slow=26, signal=9)
+        req = mock_urlopen.call_args[0][0]
+        self.assertIn("/indicators/THYAO/macd", req.full_url)
+        self.assertIn("fast=12", req.full_url)
+        self.assertIn("slow=26", req.full_url)
+        self.assertIn("signal=9", req.full_url)
+
+        # Bollinger
+        client.indicators.get_bollinger("thyao", period=20, std_dev=2.0)
+        req = mock_urlopen.call_args[0][0]
+        self.assertIn("/indicators/THYAO/bollinger", req.full_url)
+        self.assertIn("period=20", req.full_url)
+        self.assertIn("stdDev=2.0", req.full_url)
+
 
 if __name__ == "__main__":
     unittest.main()

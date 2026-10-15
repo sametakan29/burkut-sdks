@@ -9,6 +9,7 @@ from burkut.resources.gold import GoldResource
 from burkut.resources.kap import KAPResource
 from burkut.resources.stocks import StocksResource
 from burkut.resources.viop import ViopResource
+from burkut.resources.indicators import IndicatorsResource
 
 __all__ = [
     "StocksResource",
@@ -18,5 +19,6 @@ __all__ = [
     "BondsResource",
     "ViopResource",
     "KAPResource",
+    "IndicatorsResource",
 ]
 

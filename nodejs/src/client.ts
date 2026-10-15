@@ -12,6 +12,7 @@ import { BondsResource } from './resources/bonds';
 import { ForexResource } from './resources/forex';
 import { FundsResource } from './resources/funds';
 import { GoldResource } from './resources/gold';
+import { IndicatorsResource } from './resources/indicators';
 import { KAPResource } from './resources/kap';
 import { StocksResource } from './resources/stocks';
 import { ViopResource } from './resources/viop';
@@ -21,7 +22,7 @@ declare const process: any;
 
 const DEFAULT_BASE_URL = 'https://api.burkutportfoy.com/api/public/v1';
 const DEFAULT_TIMEOUT_MS = 15000;
-const SDK_VERSION = '1.0.0';
+const SDK_VERSION = '1.1.0';
 
 export class BurkutClient {
   public readonly apiKey: string;
@@ -29,6 +30,7 @@ export class BurkutClient {
   public readonly timeoutMs: number;
 
   public readonly stocks: StocksResource;
+  public readonly indicators: IndicatorsResource;
   public readonly forex: ForexResource;
   public readonly gold: GoldResource;
   public readonly funds: FundsResource;
@@ -49,6 +51,7 @@ export class BurkutClient {
     this.timeoutMs = options.timeoutMs || DEFAULT_TIMEOUT_MS;
 
     this.stocks = new StocksResource(this);
+    this.indicators = new IndicatorsResource(this);
     this.forex = new ForexResource(this);
     this.gold = new GoldResource(this);
     this.funds = new FundsResource(this);

@@ -77,6 +77,7 @@ Aşağıdaki tanımı ekleyin:
 | `burkut_get_gold` | `symbol` (örn: `ALTIN`, `CEYREK_ALTIN`) | Gram altın, çeyrek altın ve ons altın piyasa fiyatlarını döner. |
 | `burkut_get_bonds` | - | Devlet tahvilleri ve hazine bonosu getirilerini listeler. |
 | `burkut_get_viop` | - | VİOP vadeli işlem ve opsiyon kontrat fiyatlarını listeler. |
+| `burkut_get_stock_indicators` | `symbol`, `indicator` (`summary`, `rsi`, `macd`, `bollinger`), `period`, `fast`, `slow`, `signal`, `stdDev` | BIST hisseleri için hesaplanmış RSI, MACD ve Bollinger teknik göstergelerini döner. |
 
 
 ---

@@ -68,6 +68,12 @@ async function main() {
   // 4. TEFAS Yatırım Fonları
   const fon = await client.funds.get('TCD');
   console.log(`Fon: ${fon.name} - Birim Fiyat: ${fon.price} TL`);
+
+  // 5. Teknik Göstergeler (RSI, MACD, Bollinger Bantları)
+  const summary = await client.indicators.getSummary('THYAO');
+  console.log(`RSI: ${summary.rsi?.rsi} (${summary.rsi?.signal})`);
+  console.log(`MACD: ${summary.macd?.macd} Trend: ${summary.macd?.trend}`);
+  console.log(`Bollinger: Üst=${summary.bollinger?.upper} Alt=${summary.bollinger?.lower}`);
 }
 
 main();

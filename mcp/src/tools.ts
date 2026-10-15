@@ -290,4 +290,59 @@ export const TOOLS: ToolDefinition[] = [
       return JSON.stringify(unwrap(data), null, 2);
     },
   },
+
+  {
+    name: 'burkut_get_stock_indicators',
+    description: 'Borsa İstanbul (BIST) hisseleri için teknik göstergeleri (RSI, MACD, Bollinger Bantları veya Özet) hesaplar ve getirir.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        symbol: {
+          type: 'string',
+          description: 'Hisse senedi sembolü (örn: "THYAO", "ASELS", "GARAN").',
+        },
+        indicator: {
+          type: 'string',
+          enum: ['summary', 'rsi', 'macd', 'bollinger'],
+          description: 'İstenen indikatör türü. "summary" (varsayılan) RSI, MACD ve Bollinger verilerini tek yanıtta döner.',
+        },
+        period: {
+          type: 'number',
+          description: 'RSI için periyot (varsayılan: 14) veya Bollinger için periyot (varsayılan: 20).',
+        },
+        fast: {
+          type: 'number',
+          description: 'MACD hızlı EMA periyodu (varsayılan: 12).',
+        },
+        slow: {
+          type: 'number',
+          description: 'MACD yavaş EMA periyodu (varsayılan: 26).',
+        },
+        signal: {
+          type: 'number',
+          description: 'MACD sinyal periyodu (varsayılan: 9).',
+        },
+        stdDev: {
+          type: 'number',
+          description: 'Bollinger standart sapma çarpanı (varsayılan: 2.0).',
+        },
+      },
+      required: ['symbol'],
+    },
+    handler: async (client, args) => {
+      const sym = args.symbol;
+      const type = (args.indicator || 'summary').toLowerCase();
+      let res: any;
+      if (type === 'rsi') {
+        res = await client.getRSI(sym, args.period);
+      } else if (type === 'macd') {
+        res = await client.getMACD(sym, { fast: args.fast, slow: args.slow, signal: args.signal });
+      } else if (type === 'bollinger') {
+        res = await client.getBollinger(sym, { period: args.period, stdDev: args.stdDev });
+      } else {
+        res = await client.getIndicatorsSummary(sym);
+      }
+      return JSON.stringify(unwrap(res), null, 2);
+    },
+  },
 ];

@@ -23,13 +23,14 @@ from burkut.resources.bonds import BondsResource
 from burkut.resources.forex import ForexResource
 from burkut.resources.funds import FundsResource
 from burkut.resources.gold import GoldResource
+from burkut.resources.indicators import IndicatorsResource
 from burkut.resources.kap import KAPResource
 from burkut.resources.stocks import StocksResource
 from burkut.resources.viop import ViopResource
 
 DEFAULT_BASE_URL = "https://api.burkutportfoy.com/api/public/v1"
 DEFAULT_TIMEOUT = 15.0
-SDK_VERSION = "1.0.0"
+SDK_VERSION = "1.1.0"
 
 
 class BurkutClient:
@@ -71,6 +72,7 @@ class BurkutClient:
 
         # Kaynak nesneleri
         self.stocks = StocksResource(self)
+        self.indicators = IndicatorsResource(self)
         self.forex = ForexResource(self)
         self.gold = GoldResource(self)
         self.funds = FundsResource(self)

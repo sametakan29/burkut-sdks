@@ -153,4 +153,29 @@ export class BurkutApiClient {
   async getViop(): Promise<any[]> {
     return this.request('/viop');
   }
+
+  // --- Technical Indicators ---
+  async getIndicatorsSummary(symbol: string): Promise<any> {
+    return this.request(`/indicators/${normalizeSymbol(symbol)}`);
+  }
+
+  async getRSI(symbol: string, period?: number): Promise<any> {
+    const query = period ? { period } : undefined;
+    return this.request(`/indicators/${normalizeSymbol(symbol)}/rsi`, { query });
+  }
+
+  async getMACD(symbol: string, options?: { fast?: number; slow?: number; signal?: number }): Promise<any> {
+    const query: Record<string, number | undefined> = {};
+    if (options?.fast) query.fast = options.fast;
+    if (options?.slow) query.slow = options.slow;
+    if (options?.signal) query.signal = options.signal;
+    return this.request(`/indicators/${normalizeSymbol(symbol)}/macd`, { query });
+  }
+
+  async getBollinger(symbol: string, options?: { period?: number; stdDev?: number }): Promise<any> {
+    const query: Record<string, number | undefined> = {};
+    if (options?.period) query.period = options.period;
+    if (options?.stdDev) query.stdDev = options.stdDev;
+    return this.request(`/indicators/${normalizeSymbol(symbol)}/bollinger`, { query });
+  }
 }

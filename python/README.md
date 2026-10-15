@@ -97,6 +97,21 @@ viop_sozlesmeleri = client.viop.list()
 tahviller = client.bonds.list()
 ```
 
+### 7. Teknik Göstergeler (RSI, MACD, Bollinger Bantları)
+BIST hisselerinin geçmiş kapanış fiyatları üzerinden matematiksel olarak hesaplanmış indikatörleri tek satırda alın:
+```python
+# Tüm teknik göstergelerin tek seferde özeti
+summary = client.indicators.get_summary("THYAO")
+print(f"RSI (14): {summary['rsi']['rsi']} ({summary['rsi']['signal']})")
+print(f"MACD: {summary['macd']['macd']} | Trend: {summary['macd']['trend']}")
+print(f"Bollinger: Üst={summary['bollinger']['upper']}, Alt={summary['bollinger']['lower']}")
+
+# Özel periyotlarla doğrudan indikatör sorgulama
+rsi = client.indicators.get_rsi("THYAO", period=14)
+macd = client.indicators.get_macd("THYAO", fast=12, slow=26, signal=9)
+bb = client.indicators.get_bollinger("THYAO", period=20, std_dev=2.0)
+```
+
 ---
 
 ## 📊 Pandas ile Finansal Analiz & Veri Modelleme

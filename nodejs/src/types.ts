@@ -137,6 +137,54 @@ export interface KAPListResponse {
   items: KAPNotificationItem[];
 }
 
+export interface RSIResult {
+  symbol: string;
+  period: number;
+  rsi: number;
+  signal: string;
+  last_close: number;
+  last_date: string;
+  data_points: number;
+}
+
+export interface MACDResult {
+  symbol: string;
+  fast_period: number;
+  slow_period: number;
+  signal_period: number;
+  macd: number;
+  signal: number;
+  histogram: number;
+  trend: string;
+  last_close: number;
+  last_date: string;
+  data_points: number;
+}
+
+export interface BollingerResult {
+  symbol: string;
+  period: number;
+  std_dev: number;
+  upper: number;
+  middle: number;
+  lower: number;
+  bandwidth: number;
+  percent_b: number;
+  position: string;
+  last_close: number;
+  last_date: string;
+  data_points: number;
+}
+
+export interface IndicatorsSummary {
+  symbol: string;
+  last_close: number;
+  last_date: string;
+  rsi?: RSIResult;
+  macd?: MACDResult;
+  bollinger?: BollingerResult;
+}
+
 export interface BurkutClientOptions {
   /**
    * Bürküt API Anahtarı ('bk_live_...' veya 'bk_test_...').
