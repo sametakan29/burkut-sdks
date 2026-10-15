@@ -1,10 +1,12 @@
 {
   "name": "burkut-mcp",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Model Context Protocol (MCP) server for Turkish Financial Markets (BIST, TEFAS, KAP, IPOs, Macro) powered by Bürküt API.",
   "type": "module",
   "main": "dist/index.js",
-  "bin": "./dist/index.js",
+  "bin": {
+    "burkut-mcp": "dist/index.js"
+  },
   "files": [
     "dist"
   ],
