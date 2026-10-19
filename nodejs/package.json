@@ -46,6 +46,10 @@
   "bugs": {
     "url": "https://github.com/sametakan29/burkut-sdks/issues"
   },
+  "funding": {
+    "type": "custom",
+    "url": "https://kreosus.com/burkutportfoy"
+  },
   "engines": {
     "node": ">=18.0.0"
   },

@@ -25,6 +25,10 @@
   "bugs": {
     "url": "https://github.com/sametakan29/burkut-sdks/issues"
   },
+  "funding": {
+    "type": "custom",
+    "url": "https://kreosus.com/burkutportfoy"
+  },
   "keywords": [
     "mcp",
     "model-context-protocol",

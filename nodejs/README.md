@@ -4,6 +4,7 @@
 [![npm](https://img.shields.io/badge/npm-burkut-cb3837?style=flat-square&logo=npm&logoColor=white)](https://www.npmjs.com/package/burkut)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6.svg?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933.svg?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
+[![Kreosus](https://img.shields.io/badge/Kreosus-Destek%20Ol-F59E0B?style=flat-square&logo=ko-fi&logoColor=white)](https://kreosus.com/burkutportfoy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 **Borsa İstanbul (15 Dk Gecikmeli), TEFAS Yatırım Fonları, Döviz ve Altın Piyasaları için Açık Kaynak Node.js ve TypeScript İstemcisi.**
@@ -172,6 +173,14 @@ try {
 > - **15 Dakika Gecikmeli Veri:** Borsa İstanbul (BIST) pay piyasası verileri yasal düzenlemeler gereği en az 15 dakika gecikmelidir.
 > - **Yatırım Tavsiyesi Değildir:** Burada veya kütüphane aracılığıyla sunulan veriler hiçbir şekilde yatırım danışmanlığı, al-sat tavsiyesi veya finansal yönlendirme içermez.
 > - **Garanti Taahhüt Edilmez:** Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu, eksiksizliği veya kesintisizliği taahhüt edilmez.
+
+---
+
+## ☕ Projeyi Destekleyin
+
+`burkut` Node.js & TypeScript SDK açık kaynaklı ve ücretsiz bir projedir. Canlı sunucu ve veri altyapısı giderlerimize katkıda bulunarak projeyi desteklemek isterseniz:
+
+* [kreosus.com/burkutportfoy](https://kreosus.com/burkutportfoy) üzerinden bir kahve ısmarlayabilirsiniz.
 
 ---
 

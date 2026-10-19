@@ -13,6 +13,7 @@
   <a href="https://pypi.org/project/burkut/"><img src="https://img.shields.io/pypi/v/burkut?color=blue&style=flat-square&logo=pypi&logoColor=white" alt="PyPI" /></a>
   <a href="https://www.npmjs.com/package/burkut"><img src="https://img.shields.io/npm/v/burkut?color=red&style=flat-square&logo=npm&logoColor=white" alt="npm" /></a>
   <a href="https://www.npmjs.com/package/burkut-mcp"><img src="https://img.shields.io/badge/MCP-burkut--mcp-purple?style=flat-square&logo=anthropic&logoColor=white" alt="MCP" /></a>
+  <a href="https://kreosus.com/burkutportfoy"><img src="https://img.shields.io/badge/Kreosus-Destek%20Ol-F59E0B?style=flat-square&logo=ko-fi&logoColor=white" alt="Kreosus Destek" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/Lisans-MIT-gray.svg?style=flat-square" alt="Lisans" /></a>
   <a href="https://api.burkutportfoy.com"><img src="https://img.shields.io/badge/API-Aktif-emerald?style=flat-square" alt="API Durumu" /></a>
 </p>
@@ -21,7 +22,8 @@
   <a href="https://burkutportfoy.com/developers"><b>Dokümantasyon</b></a> •
   <a href="https://burkutportfoy.com/developer"><b>Geliştirici Portalı</b></a> •
   <a href="./mcp/README.md"><b>MCP Rehberi</b></a> •
-  <a href="https://burkutportfoy.com/burkut-api.postman_collection.json"><b>Postman Koleksiyonu</b></a>
+  <a href="https://burkutportfoy.com/burkut-api.postman_collection.json"><b>Postman Koleksiyonu</b></a> •
+  <a href="https://kreosus.com/burkutportfoy"><b>☕ Destek Ol</b></a>
 </p>
 
 ---
@@ -322,6 +324,23 @@ Algoritmik işlem, teknik analiz ve veri saklama modelleri geliştiren geliştir
 
 * **Teknik Destek & Geri Bildirim:** [destek@burkutportfoy.com](mailto:destek@burkutportfoy.com)
 * **Hata Bildirimi (Issues):** [github.com/sametakan29/burkut-sdks/issues](https://github.com/sametakan29/burkut-sdks/issues)
+
+---
+
+## ☕ Projeyi Destekleyin
+
+Bürküt Finansal Veri Ekosistemi (Python SDK, Node.js SDK ve MCP Server), Türkiye sermaye piyasalarında analiz, algoritmik işlem ve yapay zeka modelleri geliştiren topluluk için **tamamen açık kaynak ve ücretsiz** olarak bir mühendislik öğrencisi tarafından sürdürülmektedir.
+
+Canlı borsa veri akışı, bulut sunucu ve API kota maliyetlerimizin karşılanmasına katkıda bulunarak projenin özgürce yaşamasına destek olmak isterseniz bir kahve ısmarlayabilirsiniz:
+
+<p align="left">
+  <a href="https://kreosus.com/burkutportfoy" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/Kreosus-Geliştiriciye%20Destek%20Ol-F59E0B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Kreosus ile Destek Ol" height="38" />
+  </a>
+</p>
+
+* **Resmi Destek Sayfası:** [kreosus.com/burkutportfoy](https://kreosus.com/burkutportfoy)
+* Destek ödemeleri, BDDK lisanslı ve TCMB onaylı yerli ödeme geçidi (iyzico / 3D Secure) altyapısıyla güvenle gerçekleştirilmektedir.
 
 ---
 

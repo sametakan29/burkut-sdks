@@ -12,6 +12,7 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/burkut-mcp"><img src="https://img.shields.io/npm/v/burkut-mcp?color=purple&style=flat-square&logo=npm&logoColor=white" alt="npm version" /></a>
   <a href="https://modelcontextprotocol.io/"><img src="https://img.shields.io/badge/Protokol-MCP%20Standard%C4%B1-blueviolet?style=flat-square&logo=anthropic&logoColor=white" alt="MCP Protocol" /></a>
+  <a href="https://kreosus.com/burkutportfoy"><img src="https://img.shields.io/badge/Kreosus-Destek%20Ol-F59E0B?style=flat-square&logo=ko-fi&logoColor=white" alt="Kreosus Destek" /></a>
   <a href="../LICENSE"><img src="https://img.shields.io/badge/Lisans-MIT-gray.svg?style=flat-square" alt="Lisans" /></a>
 </p>
 
@@ -126,6 +127,13 @@ node dist/index.js
 
 ---
 
-## Lisans
+## ☕ Projeyi Destekleyin
 
+`burkut-mcp` sunucusu ve veri araçları açık kaynaklı ve ücretsiz olarak sürdürülmektedir. Canlı piyasa veri altyapısı ve sunucu maliyetlerine katkıda bulunarak projeyi desteklemek isterseniz:
+
+* [kreosus.com/burkutportfoy](https://kreosus.com/burkutportfoy) üzerinden bir kahve ısmarlayabilirsiniz.
+
+---
+
+## Lisans
 Bu proje [MIT Lisansı](../LICENSE) ile korunmaktadır. Telif Hakkı &copy; 2026 Bürküt Finansal Teknolojiler.

@@ -3,6 +3,7 @@
 [![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg?style=flat-square)](https://github.com/sametakan29/burkut-sdks/releases)
 [![PyPI](https://img.shields.io/badge/PyPI-burkut-blue?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/burkut/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB.svg?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Kreosus](https://img.shields.io/badge/Kreosus-Destek%20Ol-F59E0B?style=flat-square&logo=ko-fi&logoColor=white)](https://kreosus.com/burkutportfoy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 **Borsa İstanbul (15 Dk Gecikmeli), TEFAS Yatırım Fonları, Döviz ve Altın Piyasaları için Açık Kaynak ve Sıfır Bağımlılıklı Python İstemcisi.**
@@ -189,6 +190,14 @@ client = BurkutClient(
 > - **15 Dakika Gecikmeli Veri:** Borsa İstanbul (BIST) pay piyasası verileri yasal düzenlemeler gereği en az 15 dakika gecikmelidir.
 > - **Yatırım Tavsiyesi Değildir:** Burada veya kütüphane aracılığıyla sunulan veriler hiçbir şekilde yatırım danışmanlığı, al-sat tavsiyesi veya finansal yönlendirme içermez.
 > - **Garanti Taahhüt Edilmez:** Veriler üçüncü taraf halka açık kaynaklardan derlenmektedir ve doğruluğu, eksiksizliği veya kesintisizliği taahhüt edilmez.
+
+---
+
+## ☕ Projeyi Destekleyin
+
+`burkut` Python kütüphanesi açık kaynaklı ve ücretsiz bir projedir. Canlı sunucu ve veri altyapısı giderlerimize katkıda bulunarak projeyi desteklemek isterseniz:
+
+* [kreosus.com/burkutportfoy](https://kreosus.com/burkutportfoy) üzerinden bir kahve ısmarlayabilirsiniz.
 
 ---
 
